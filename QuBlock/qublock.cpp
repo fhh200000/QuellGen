@@ -1,15 +1,23 @@
 #include "qublock.h"
+#include "ui_qublock.h"
 
 QuBlock::QuBlock(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    ui(new Ui::QuBlock)
 {
-    QSize sz = QSize(48,48);
-    this->first.setScaledContents(true);
-    this->second.setScaledContents(true);
-    this->third.setScaledContents(true);
-    this->setMaximumSize(sz);
-    this->setMaximumSize(sz);
-    this->setMaximumSize(sz);
-
+    ui->setupUi(this);
 }
 
+QuBlock::~QuBlock()
+{
+    delete ui;
+}
+void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c)
+{
+    ui->first->setPixmap(a);
+    ui->second->setPixmap(b);
+    ui->third->setPixmap(c);
+    ui->first->show();
+    ui->second->show();
+    ui->third->show();
+}

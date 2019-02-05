@@ -25,7 +25,7 @@ public:
     QString whatsThis() const;
     QWidget *createWidget(QWidget *parent);
     void initialize(QDesignerFormEditorInterface *core);
-    void initAtlas(QPixmap& a,QPixmap& b,QPixmap& c);
+
 private:
     bool m_initialized;
 };

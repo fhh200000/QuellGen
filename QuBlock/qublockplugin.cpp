@@ -41,7 +41,7 @@ QString QuBlockPlugin::group() const
 
 QIcon QuBlockPlugin::icon() const
 {
-    return QIcon();
+    return QIcon(QLatin1String(":/low.png"));
 }
 
 QString QuBlockPlugin::toolTip() const
@@ -67,10 +67,6 @@ QString QuBlockPlugin::domXml() const
 QString QuBlockPlugin::includeFile() const
 {
     return QLatin1String("qublock.h");
-}
-void QuBlockPlugin::initAtlas(QPixmap& a,QPixmap& b,QPixmap& c)
-{
-
 }
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(qublock, QuBlockPlugin)
