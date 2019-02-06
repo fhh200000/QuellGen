@@ -12,6 +12,7 @@ QuBlock::~QuBlock()
 {
     delete ui;
 }
+
 void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c)
 {
     ui->first->setPixmap(a);
@@ -20,4 +21,5 @@ void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c)
     ui->first->show();
     ui->second->show();
     ui->third->show();
+    this->repaint();
 }

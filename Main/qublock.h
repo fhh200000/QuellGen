@@ -2,16 +2,21 @@
 #define QUBLOCK_H
 
 #include <QWidget>
-#include <QLabel>
+
+namespace Ui {
+class QuBlock;
+}
 
 class QuBlock : public QWidget
 {
     Q_OBJECT
 
 public:
-    QLabel first,second,third;
-    QuBlock(QWidget *parent = nullptr);
+    explicit QuBlock(QWidget *parent = nullptr);
+    ~QuBlock();
     void initAtlas(QPixmap&,QPixmap&,QPixmap&);
+private:
+    Ui::QuBlock *ui;
 };
 
-#endif
+#endif // QUBLOCK_H

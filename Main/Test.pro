@@ -15,16 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     itworkspop.cpp \
-    quellblock.cpp
+    quellblock.cpp \
+    qublock.cpp
 
 HEADERS  += mainwindow.h \
     itworkspop.h \
-    quellblock.h
+    quellblock.h \
+    qublock.h
 
 FORMS    += mainwindow.ui \
-    itworkspop.ui
-
-unix:!macx: LIBS += -L$$PWD/../build-QuBlock-Desktop-Debug/ -lqublock
-
-INCLUDEPATH += $$PWD/../build-QuBlock-Desktop-Debug
-DEPENDPATH += $$PWD/../build-QuBlock-Desktop-Debug
+    itworkspop.ui \
+    qublock.ui

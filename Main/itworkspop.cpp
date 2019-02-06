@@ -20,7 +20,7 @@ ItWorksPop::~ItWorksPop()
     delete ui;
 }
 void ItWorksPop::initMap(void){
-    QuBlock *qu = new QuBlock();
+    QuBlock *qu = new QuBlock(this);
     this->ui->gridLayout->setAlignment(Qt::AlignTop);
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QPixmap* atlasp = QuellBlock::atlasp;
@@ -52,12 +52,17 @@ void ItWorksPop::initMap(void){
     map[1]->show();
     map[2]->show();*/
     ui->gridLayout->addWidget(qu,0,0,1,1);
-    qu->show();
-    qu->first.show();
-    qu->second.show();
-    qu->third.show();
-    printf("%d\n",qu->first.pixmap()->depth());
-    ui->bg->resize(256,256);
+    qu->setVisible(true);
+    printf("%d\n",qu->size().width());
+    printf("Hidden:%d\n",qu->isHidden());
+    printf("Visible:%d\n",qu->isVisible());
+/*    qu->initAtlas()
+    qu->first->show();
+    qu->second->show();
+    qu->third->show();
+    printf("%d\n",qu->first->pixmap()->depth());*/
+    ui->bg->resize(128,128);
     ui->bg->setPixmap(atlasp[132]);
-    ui->bg->setVisible(false);
+    ui->bg->setVisible(true);
+    ui->bg->repaint();
 }
