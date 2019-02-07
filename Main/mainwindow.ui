@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>It Works!</string>
+     <string>It works!</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">

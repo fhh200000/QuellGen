@@ -20,49 +20,17 @@ ItWorksPop::~ItWorksPop()
     delete ui;
 }
 void ItWorksPop::initMap(void){
-    QuBlock *qu = new QuBlock(this);
+    QuBlock *qu[5];
     this->ui->gridLayout->setAlignment(Qt::AlignTop);
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QPixmap* atlasp = QuellBlock::atlasp;
-    qu->initAtlas(atlasp[132],atlasp[22],atlasp[151]);
-    /*QSize size = QSize(48,48);
-    QLabel* map[3];
-    map[0] = new QLabel();
-    map[1] = new QLabel();
-    map[2] = new QLabel();
-    map[0]->setScaledContents(true);
-    map[1]->setScaledContents(true);
-    map[2]->setScaledContents(true);
-    map[0]->setPixmap(atlasp[132]);
-    map[0]->setSizePolicy(sizePolicy);
-    printf("layer 0 loaded with atlas 131.\n");
-    map[1]->setPixmap(atlasp[22]);
-    map[1]->setSizePolicy(sizePolicy);
-    printf("layer 1 loaded with atlas 22.\n");
-    map[2]->setPixmap(atlasp[151]);
-    map[2]->setSizePolicy(sizePolicy);
-    printf("layer 2 loaded with atlas 151.\n");
-    map[0]->setMaximumSize(size);
-    map[1]->setMaximumSize(size);
-    map[2]->setMaximumSize(size);
-    this->ui->gridLayout->addWidget(map[0],0,0,1,1);
-    this->ui->gridLayout->addWidget(map[1],1,0,1,1);
-    this->ui->gridLayout->addWidget(map[2],1,0,1,1);
-    map[0]->show();
-    map[1]->show();
-    map[2]->show();*/
-    ui->gridLayout->addWidget(qu,0,0,1,1);
-    qu->setVisible(true);
-    printf("%d\n",qu->size().width());
-    printf("Hidden:%d\n",qu->isHidden());
-    printf("Visible:%d\n",qu->isVisible());
-/*    qu->initAtlas()
-    qu->first->show();
-    qu->second->show();
-    qu->third->show();
-    printf("%d\n",qu->first->pixmap()->depth());*/
-    ui->bg->resize(128,128);
-    ui->bg->setPixmap(atlasp[132]);
-    ui->bg->setVisible(true);
-    ui->bg->repaint();
+    for(int i=0;i<5;i++)
+    {
+        qu[i] = new QuBlock(this);
+        qu[i]->initAtlas(atlasp[132],atlasp[22],atlasp[151]);
+        qu[i]->setGeometry(i*48,0,48,48);
+        qu[i]->show();
+    }
+//    QuBlock* qu2 = new QuBlock(this);
+ //   qu2->show();
 }

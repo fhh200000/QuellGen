@@ -6,6 +6,9 @@ QuBlock::QuBlock(QWidget *parent) :
     ui(new Ui::QuBlock)
 {
     ui->setupUi(this);
+    ui->first->setScaledContents(true);
+    ui->second->setScaledContents(true);
+    ui->third->setScaledContents(true);
 }
 
 QuBlock::~QuBlock()

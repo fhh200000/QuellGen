@@ -15,13 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     itworkspop.cpp \
-    quellblock.cpp \
-    qublock.cpp
+    qublock.cpp \
+    quellblock.cpp
 
 HEADERS  += mainwindow.h \
     itworkspop.h \
-    quellblock.h \
-    qublock.h
+    qublock.h \
+    quellblock.h
 
 FORMS    += mainwindow.ui \
     itworkspop.ui \
