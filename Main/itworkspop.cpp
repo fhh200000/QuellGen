@@ -20,24 +20,25 @@ ItWorksPop::~ItWorksPop()
 {
     delete ui;
 }
-void ItWorksPop::initMap(void)
+void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
 {
-    QuBlock *qu[5];
-    que = qu;
+    int tmp = -1;
+    que = new QuBlock*[w*h];
     QPixmap* atlasp = QuellBlock::atlasp;
-    for(int i=0;i<5;i++)
+    for(int i=0;i<h;i++)//竖排
     {
-        qu[i] = new QuBlock(this);
-        qu[i]->initAtlas(atlasp[132],atlasp[22],atlasp[151]);
-        qu[i]->setGeometry(i*48,0,48,48);
-        qu[i]->show();
+        for(int j=0;j<w;j++)//竖排
+        {
+            que[++tmp] = new QuBlock(this);
+            que[tmp]->initAtlas(atlasp[layer0[tmp]],atlasp[layer1[tmp]],atlasp[layer2[tmp]]);
+            que[tmp]->setGeometry(i*48,j*48,48,48);
+            que[tmp]->show();
+        }
     }
-    this->removeMap(5);
+    this->resize(48*h,48*w);
 }
 void ItWorksPop::removeMap(int size)
 {
-    sleep(1);
-
     for(int i=0;i<size;i++)
     {
         que[i]->hide();

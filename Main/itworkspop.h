@@ -14,9 +14,8 @@ class ItWorksPop : public QDialog
 public:
     explicit ItWorksPop(QWidget *parent = nullptr);
     ~ItWorksPop();
-    void initMap(void);
+    void initMap(int,int,int[],int[],int[]);
     void removeMap(int);
-    //QSize size;
 private:
     Ui::ItWorksPop *ui;
     QuBlock** que;

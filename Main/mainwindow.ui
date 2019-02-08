@@ -27,17 +27,33 @@
      <string>It works!</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>200</y>
-      <width>81</width>
-      <height>21</height>
+      <x>110</x>
+      <y>130</y>
+      <width>80</width>
+      <height>25</height>
      </rect>
     </property>
     <property name="text">
-     <string>OK</string>
+     <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>130</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
     </property>
    </widget>
   </widget>
@@ -57,6 +73,7 @@
     <addaction name="actionOpen"/>
     <addaction name="actionImport"/>
     <addaction name="separator"/>
+    <addaction name="actionPreview"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menu">
@@ -102,6 +119,11 @@
     <string>制作工具……</string>
    </property>
   </action>
+  <action name="actionPreview">
+   <property name="text">
+    <string>显示预览界面</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -119,6 +141,22 @@
     <hint type="destinationlabel">
      <x>199</x>
      <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPreview</sender>
+   <signal>triggered()</signal>
+   <receiver>pushButton</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>279</x>
+     <y>164</y>
     </hint>
    </hints>
   </connection>

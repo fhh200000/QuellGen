@@ -28,10 +28,10 @@
   <widget class="QLabel" name="first">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>48</width>
-     <height>48</height>
+     <x>-2</x>
+     <y>-2</y>
+     <width>52</width>
+     <height>52</height>
     </rect>
    </property>
    <property name="text">
@@ -41,10 +41,10 @@
   <widget class="QLabel" name="second">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>48</width>
-     <height>48</height>
+     <x>-2</x>
+     <y>-2</y>
+     <width>52</width>
+     <height>52</height>
     </rect>
    </property>
    <property name="text">
@@ -54,10 +54,10 @@
   <widget class="QLabel" name="third">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>48</width>
-     <height>48</height>
+     <x>-2</x>
+     <y>-2</y>
+     <width>52</width>
+     <height>52</height>
     </rect>
    </property>
    <property name="text">
