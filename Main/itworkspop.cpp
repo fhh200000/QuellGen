@@ -3,6 +3,7 @@
 #include <QDesktopWidget>
 #include "quellblock.h"
 #include "qublock.h"
+#include <unistd.h>
 ItWorksPop::ItWorksPop(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItWorksPop)
@@ -19,10 +20,10 @@ ItWorksPop::~ItWorksPop()
 {
     delete ui;
 }
-void ItWorksPop::initMap(void){
+void ItWorksPop::initMap(void)
+{
     QuBlock *qu[5];
-    this->ui->gridLayout->setAlignment(Qt::AlignTop);
-    QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    que = qu;
     QPixmap* atlasp = QuellBlock::atlasp;
     for(int i=0;i<5;i++)
     {
@@ -31,6 +32,16 @@ void ItWorksPop::initMap(void){
         qu[i]->setGeometry(i*48,0,48,48);
         qu[i]->show();
     }
-//    QuBlock* qu2 = new QuBlock(this);
- //   qu2->show();
+    this->removeMap(5);
+}
+void ItWorksPop::removeMap(int size)
+{
+    sleep(1);
+
+    for(int i=0;i<size;i++)
+    {
+        que[i]->hide();
+        delete(que[i]);
+    }
+    que=nullptr;
 }
