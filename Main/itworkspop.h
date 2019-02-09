@@ -15,7 +15,7 @@ public:
     explicit ItWorksPop(QWidget *parent = nullptr);
     ~ItWorksPop();
     void initMap(int,int,int[],int[],int[]);
-    void removeMap(int);
+    void removeMap();
 private:
     Ui::ItWorksPop *ui;
     QuBlock** que;

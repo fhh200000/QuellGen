@@ -14,7 +14,8 @@ void QuellBlock::loadAtlas(void)
 {
     atlasp = new QPixmap[200];
     //string location = GetCurrentDirectory() + "";
-    QString location = "/run/media/fhh/Utilities/QuellGen/Resources/Atlas/Zen/";
+    QString location = QCoreApplication::applicationDirPath()+"/Resources/Atlas/Zen/";
+    qDebug()<<location;
     QString filelocation;
     for(int i=0;i<=174;i++)
     {

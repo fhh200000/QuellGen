@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>预览界面</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon.ico</normaloff>icon.ico</iconset>
+  </property>
   <property name="windowOpacity">
    <double>0.900000000000000</double>
   </property>

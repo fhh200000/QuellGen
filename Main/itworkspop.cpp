@@ -31,14 +31,16 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
         {
             que[++tmp] = new QuBlock(this);
             que[tmp]->initAtlas(atlasp[layer0[tmp]],atlasp[layer1[tmp]],atlasp[layer2[tmp]]);
-            que[tmp]->setGeometry(i*48,j*48,48,48);
+            que[tmp]->setGeometry(j*48,i*48,48,48);
             que[tmp]->show();
         }
     }
-    this->resize(48*h,48*w);
+    this->resize(48*w,48*h);
+    this->ui->bg->hide();
 }
-void ItWorksPop::removeMap(int size)
+void ItWorksPop::removeMap()
 {
+    int size = (this->size().width()/48)*(this->size().height()/48);
     for(int i=0;i<size;i++)
     {
         que[i]->hide();
