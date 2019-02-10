@@ -19,6 +19,7 @@ public:
 private:
     Ui::ItWorksPop *ui;
     QuBlock** que;
+    int count;
 };
 
 #endif // ITWORKSPOP_H

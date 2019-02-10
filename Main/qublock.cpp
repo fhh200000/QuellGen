@@ -14,6 +14,7 @@ QuBlock::QuBlock(QWidget *parent) :
 QuBlock::~QuBlock()
 {
     delete ui;
+    printf("block removed.\n");
 }
 
 void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c)

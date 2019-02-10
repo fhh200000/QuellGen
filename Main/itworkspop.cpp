@@ -24,6 +24,7 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
 {
     int tmp = -1;
     que = new QuBlock*[w*h];
+    count = w*h;
     QPixmap* atlasp = QuellBlock::atlasp;
     for(int i=0;i<h;i++)//竖排
     {
@@ -40,11 +41,11 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
 }
 void ItWorksPop::removeMap()
 {
-    int size = (this->size().width()/48)*(this->size().height()/48);
-    for(int i=0;i<size;i++)
+    for(int i=0;i<count;i++)
     {
         que[i]->hide();
         delete(que[i]);
     }
     que=nullptr;
+    this->ui->bg->show();
 }
