@@ -1,6 +1,5 @@
 #include "quellblock.h"
 #include "mainwindow.h"
-using namespace std;
 QPixmap* QuellBlock::atlasp;
 QuellBlock::QuellBlock()
 {
@@ -13,9 +12,7 @@ QuellBlock::~QuellBlock()
 void QuellBlock::loadAtlas(void)
 {
     atlasp = new QPixmap[200];
-    //string location = GetCurrentDirectory() + "";
     QString location = QCoreApplication::applicationDirPath()+"/Resources/Atlas/Zen/";
-    qDebug()<<location;
     QString filelocation;
     for(int i=0;i<=174;i++)
     {

@@ -25,5 +25,4 @@ void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c)
     ui->first->show();
     ui->second->show();
     ui->third->show();
-    this->repaint();
 }

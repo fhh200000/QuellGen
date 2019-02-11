@@ -3,6 +3,7 @@
 #include "itworkspop.h"
 #include "quellblock.h"
 #include <QFileDialog>
+#include <cstdio>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -22,10 +23,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_2_clicked()
 {
     pop->removeMap();
-    /*int layer1[] = {14,15,132,163,174,25};
-    int layer2[] = {0,23,0,0,0,23};
-    int layer3[] = {155,0,0,155,0,0};
-    pop->initMap(2,3,layer1,layer2,layer3);*/
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -42,29 +39,69 @@ void MainWindow::on_pushButton_clicked()
 }
 void MainWindow::open_selected()
 {
-    //定义文件对话框类
-        QFileDialog *fileDialog = new QFileDialog(this);
-        //定义文件对话框标题
-        fileDialog->setWindowTitle(tr("打开关卡"));
-        //设置默认文件路径
-        fileDialog->setDirectory(".");
-        //设置文件过滤器
-        fileDialog->setNameFilter(tr("Quell关卡文件(*.gmp)"));
-        //设置可以选择多个文件,默认为只能选择一个文件QFileDialog::ExistingFiles
-        fileDialog->setFileMode(QFileDialog::ExistingFile);
-        //设置视图模式
-        fileDialog->setViewMode(QFileDialog::Detail);
-        //打印所有选择的文件的路径
-        QString fileName;
-        if(fileDialog->exec())
-        {
-            fileName = fileDialog->selectedFiles().first();
-        }
-        qDebug()<<fileName<<endl;
-        QFile *fp = new QFile(fileName);
-        fp->open(QIODevice::ReadOnly | QIODevice::Text);
-        data = fp->readAll();
-        fp->close();
-        qDebug()<<MainWindow::data<<endl;
-        delete fp;
+     QFileDialog *fileDialog = new QFileDialog(this);
+     fileDialog->setWindowTitle(tr("打开关卡"));
+     fileDialog->setDirectory(".");
+     fileDialog->setNameFilter(tr("Quell关卡文件(*.gmp)"));
+     fileDialog->setFileMode(QFileDialog::ExistingFile);
+     fileDialog->setViewMode(QFileDialog::Detail);
+     QString fileName;
+     if(fileDialog->exec())
+     {
+          fileName = fileDialog->selectedFiles().first();
+     }
+     qDebug()<<fileName<<endl;
+     int steps = 0;
+     unsigned int w,h;
+     //为人类阅读而优化2333
+     FILE *fp;
+     char* name = new char[32];
+     fp = fopen(fileName.toStdString().data(),"r+");
+     fscanf(fp,"[QuellGen level data file]\n");
+     fscanf(fp,"Level name:%s\n",name);
+     fscanf(fp,"Best solution:%d\n",&steps);
+     fscanf(fp,"Width:%d\n",&w);
+     fscanf(fp,"Height:%d\n",&h);
+     int *layer0 = new int[w*h];
+     int *layer1 = new int[w*h];
+     int *layer2 = new int[w*h];
+     fscanf(fp,"Layer 0:\n");
+     int k=0;
+     for(unsigned int i=0;i<h;i++)
+     {
+         for(unsigned int j=0;j<w;j++)
+         {
+             fscanf(fp,"%d",&layer0[k++]);
+         }
+         fscanf(fp,"\n");
+     }
+     fscanf(fp,"Layer 1:\n");
+     k=0;
+     for(unsigned int i=0;i<h;i++)
+     {
+         for(unsigned int j=0;j<w;j++)
+         {
+             fscanf(fp,"%d",&layer1[k++]);
+         }
+         fscanf(fp,"\n");
+     }
+     fscanf(fp,"Layer 2:\n");
+     k=0;
+     for(unsigned int i=0;i<h;i++)
+     {
+         for(unsigned int j=0;j<w;j++)
+         {
+             fscanf(fp,"%d",&layer2[k++]);
+         }
+         fscanf(fp,"\n");
+     }
+     fclose(fp);
+     delete(fp);
+     pop = new ItWorksPop(this);
+     pop->setModal(false);
+     pop->initMap(14,10,layer0,layer1,layer2);
+     delete[] layer0;
+     delete[] layer1;
+     delete[] layer2;
+     pop->show();
 }
