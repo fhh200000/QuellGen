@@ -14,10 +14,10 @@ QuBlock::QuBlock(QWidget *parent) :
 QuBlock::~QuBlock()
 {
     delete ui;
-    printf("block removed.\n");
+    printf("block (%d,%d) removed.\n",x,y);
 }
 
-void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c)
+void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c,int xin,int yin)
 {
     ui->first->setPixmap(a);
     ui->second->setPixmap(b);
@@ -25,4 +25,6 @@ void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c)
     ui->first->show();
     ui->second->show();
     ui->third->show();
+    x = xin;
+    y = yin;
 }

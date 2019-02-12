@@ -14,7 +14,8 @@ class QuBlock : public QWidget
 public:
     explicit QuBlock(QWidget *parent = nullptr);
     ~QuBlock();
-    void initAtlas(QPixmap&,QPixmap&,QPixmap&);
+    void initAtlas(QPixmap&,QPixmap&,QPixmap&,int,int);
+    int x,y;
 private:
     Ui::QuBlock *ui;
 };

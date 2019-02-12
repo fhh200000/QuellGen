@@ -23,7 +23,7 @@ ItWorksPop::~ItWorksPop()
 void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
 {
     int tmp = -1;
-    que = new QuBlock*[w*h];
+    que = new QuBlock*[static_cast<unsigned long>(w*h)];
     count = w*h;
     QPixmap* atlasp = QuellBlock::atlasp;
     for(int i=0;i<h;i++)//竖排
@@ -31,7 +31,7 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
         for(int j=0;j<w;j++)//竖排
         {
             que[++tmp] = new QuBlock(this);
-            que[tmp]->initAtlas(atlasp[layer0[tmp]],atlasp[layer1[tmp]],atlasp[layer2[tmp]]);
+            que[tmp]->initAtlas(atlasp[layer0[tmp]],atlasp[layer1[tmp]],atlasp[layer2[tmp]],j,i);
             que[tmp]->setGeometry(j*48,i*48,48,48);
             que[tmp]->show();
         }
