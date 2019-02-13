@@ -18,7 +18,7 @@ public:
     void removeMap();
 private:
     Ui::ItWorksPop *ui;
-    QuBlock** que;
+    QuBlock** que=nullptr;
     int count;
 };
 

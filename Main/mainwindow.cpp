@@ -4,11 +4,15 @@
 #include "quellblock.h"
 #include <QFileDialog>
 #include <cstdio>
+#include <iostream>
+#include <aboutgame.h>
 #ifdef Q_OS_LINUX
 #define SEPARATOR "\n"
-#elif define Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
 #define SEPARATOR "\r\n"
-#elif defined Q_OS_MAC
+#endif
+#ifdef Q_OS_MAC
 #define SEPARATOR "\r"
 #endif
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->pushButton->hide();
     connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(open_selected()));
     connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(save_selected()));
+    connect(ui->actionGame,SIGNAL(triggered()),this,SLOT(aboutGame()));
 }
 
 MainWindow::~MainWindow()
@@ -28,6 +33,11 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::aboutGame()
+{
+    AboutGame *ab = new AboutGame();
+    ab->show();
+}
 void MainWindow::on_pushButton_2_clicked()
 {
     pop->removeMap();
@@ -39,10 +49,19 @@ void MainWindow::on_pushButton_clicked()
     {
         pop = new ItWorksPop(this);
         pop->setModal(false);
-        pop->initMap(14,10,layer0,layer1,layer2);
     }
     pop->show();
-    printf(SEPARATOR);
+}
+void  MainWindow::refresh(unsigned w, unsigned h)
+{
+    if(!pop)
+    {
+        pop = new ItWorksPop(this);
+        pop->setModal(false);
+    }
+    pop->removeMap();
+    pop->initMap(static_cast<int>(w),static_cast<int>(h),layer0,layer1,layer2);
+    pop->show();
 }
 void MainWindow::open_selected()
 {
@@ -58,6 +77,7 @@ void MainWindow::open_selected()
           fileName = fileDialog->selectedFiles().first();
      }
      qDebug()<<fileName<<endl;
+     if(fileName=="")return;
      //为人类阅读而优化2333
      FILE *fp;
      fp = fopen(fileName.toStdString().data(),"r+");
@@ -116,13 +136,13 @@ void MainWindow::open_selected()
          fscanf(fp,SEPARATOR);
      }
      fclose(fp);
-     on_pushButton_clicked();
+     refresh(w,h);
 }
 void MainWindow::save_selected()
 {
     QFileDialog *fileDialog = new QFileDialog(this);
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
-    fileDialog->setWindowTitle(tr("打开关卡"));
+    fileDialog->setWindowTitle(tr("保存关卡"));
     fileDialog->setDirectory(".");
     fileDialog->setDefaultSuffix("gmp");
     fileDialog->setNameFilter(tr("Quell关卡文件(*.gmp)"));

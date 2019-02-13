@@ -41,11 +41,12 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
 }
 void ItWorksPop::removeMap()
 {
+    if(!que)return;
     for(int i=0;i<count;i++)
     {
         que[i]->hide();
         delete(que[i]);
     }
     que=nullptr;
-    this->ui->bg->show();
+    //this->ui->bg->show();
 }

@@ -18,8 +18,10 @@ public:
 private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_clicked();
+    void refresh(uint,uint);
     void open_selected();
     void save_selected();
+    void aboutGame();
 public:
     Ui::MainWindow *ui;
     ItWorksPop *pop=nullptr;
