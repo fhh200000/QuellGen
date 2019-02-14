@@ -17,15 +17,18 @@ SOURCES += main.cpp\
     itworkspop.cpp \
     qublock.cpp \
     quellblock.cpp \
-    aboutgame.cpp
+    aboutgame.cpp \
+    aboutauthor.cpp
 
 HEADERS  += mainwindow.h \
     itworkspop.h \
     qublock.h \
     quellblock.h \
-    aboutgame.h
+    aboutgame.h \
+    aboutauthor.h
 
 FORMS    += mainwindow.ui \
     itworkspop.ui \
     qublock.ui \
-    aboutgame.ui
+    aboutgame.ui \
+    aboutauthor.ui

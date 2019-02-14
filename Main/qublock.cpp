@@ -1,6 +1,5 @@
 #include "qublock.h"
 #include "ui_qublock.h"
-
 QuBlock::QuBlock(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::QuBlock)
@@ -9,6 +8,8 @@ QuBlock::QuBlock(QWidget *parent) :
     ui->first->setScaledContents(true);
     ui->second->setScaledContents(true);
     ui->third->setScaledContents(true);
+    //connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(open_selected()));
+    connect(ui->click,SIGNAL(clicked()),this,SLOT(clicked()));
 }
 
 QuBlock::~QuBlock()
@@ -27,4 +28,8 @@ void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c,int xin,int yin)
     ui->third->show();
     x = xin;
     y = yin;
+}
+void QuBlock::clicked()
+{
+    printf("block (%d,%d) clicked.\n",x,y);
 }

@@ -22,6 +22,7 @@ private slots:
     void open_selected();
     void save_selected();
     void aboutGame();
+    void aboutAuthor();
 public:
     Ui::MainWindow *ui;
     ItWorksPop *pop=nullptr;

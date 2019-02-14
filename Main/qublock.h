@@ -18,6 +18,8 @@ public:
     int x,y;
 private:
     Ui::QuBlock *ui;
+private slots:
+    void clicked();
 };
 
 #endif // QUBLOCK_H

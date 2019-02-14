@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AboutGame</class>
- <widget class="QDialog" name="AboutGame">
+ <class>AboutAuthor</class>
+ <widget class="QWidget" name="AboutAuthor">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>关于游戏</string>
+   <string>Form</string>
   </property>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>OK</string>
+    <string>PushButton</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>Image Here</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -49,27 +49,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fallen Tree Games&lt;br/&gt;2010-201?&lt;br/&gt;All rights reserved.&lt;br/&gt;&amp;quot;Quell&amp;quot;,&amp;quot;Quell Reflect&amp;quot;,&amp;quot;Quell Memento&amp;quot;,&amp;quot;Quell Zen&amp;quot;&lt;br&gt;and water drop logos are the trademarks of &lt;br&gt;Fallen Tree Games.&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It Works!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>AboutGame</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>199</x>
-     <y>172</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>206</x>
-     <y>101</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

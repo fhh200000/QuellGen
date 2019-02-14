@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <iostream>
 #include <aboutgame.h>
+#include "aboutauthor.h"
 #ifdef Q_OS_LINUX
 #define SEPARATOR "\n"
 #endif
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(open_selected()));
     connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(save_selected()));
     connect(ui->actionGame,SIGNAL(triggered()),this,SLOT(aboutGame()));
+    connect(ui->actionAuthor,SIGNAL(triggered()),this,SLOT(aboutAuthor()));
 }
 
 MainWindow::~MainWindow()
@@ -36,6 +38,11 @@ MainWindow::~MainWindow()
 void MainWindow::aboutGame()
 {
     AboutGame *ab = new AboutGame();
+    ab->show();
+}
+void MainWindow::aboutAuthor()
+{
+    AboutAuthor *ab = new AboutAuthor();
     ab->show();
 }
 void MainWindow::on_pushButton_2_clicked()
