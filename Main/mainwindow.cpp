@@ -16,6 +16,7 @@
 #ifdef Q_OS_MAC
 #define SEPARATOR "\r"
 #endif
+MainWindow* MainWindow::self;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(save_selected()));
     connect(ui->actionGame,SIGNAL(triggered()),this,SLOT(aboutGame()));
     connect(ui->actionAuthor,SIGNAL(triggered()),this,SLOT(aboutAuthor()));
+    MainWindow::self = this;
 }
 
 MainWindow::~MainWindow()
@@ -48,6 +50,8 @@ void MainWindow::aboutAuthor()
 void MainWindow::on_pushButton_2_clicked()
 {
     pop->removeMap();
+    ui->detailed->setDisabled(true);
+    ui->statusBar->showMessage("已清除数据");
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -206,4 +210,11 @@ void MainWindow::save_selected()
         fprintf(fp,SEPARATOR);
     }
     fclose(fp);
+}
+void MainWindow::loadinfo(int x,int y)
+{
+    QString data = QString("选中方块(%1,%2)").arg(x).arg(y);
+    ui->statusBar->showMessage(data,-1);
+    ui->detailed->setEnabled(true);
+    ui->l1->setCurrentIndex(layer0[x+y*static_cast<int>(w)]);
 }

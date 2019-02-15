@@ -15,6 +15,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QString data;
+    static MainWindow* self;
 private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_clicked();
@@ -32,6 +33,7 @@ public:
     int steps = 0;
     unsigned int w,h;
     char* name = new char[32];
+    void loadinfo(int x,int y);
 };
 
 #endif // MAINWINDOW_H
