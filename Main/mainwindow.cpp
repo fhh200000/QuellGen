@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "itworkspop.h"
-#include "quellblock.h"
 #include <QFileDialog>
 #include <cstdio>
 #include <iostream>

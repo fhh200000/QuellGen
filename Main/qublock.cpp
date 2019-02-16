@@ -29,6 +29,10 @@ void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c,int xin,int yin)
     x = xin;
     y = yin;
 }
+void QuBlock::reloadAtlas(QPixmap& a)
+{
+    ui->first->setPixmap(a);
+}
 void QuBlock::clicked()
 {
     printf("block (%d,%d) clicked.\n",x,y);

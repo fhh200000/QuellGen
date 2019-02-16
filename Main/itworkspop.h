@@ -1,8 +1,9 @@
 #ifndef ITWORKSPOP_H
 #define ITWORKSPOP_H
-
+#include "quellblock.h"
 #include <QDialog>
 #include "qublock.h"
+#include "quellblock.h"
 namespace Ui {
 class ItWorksPop;
 }
@@ -16,6 +17,7 @@ public:
     ~ItWorksPop();
     void initMap(int,int,int[],int[],int[]);
     void removeMap();
+    void reloadBlock(extrablock in,int width);
 private:
     Ui::ItWorksPop *ui;
     QuBlock** que=nullptr;

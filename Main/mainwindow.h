@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "quellblock.h"
 #include <QMainWindow>
 #include "itworkspop.h"
 namespace Ui {
