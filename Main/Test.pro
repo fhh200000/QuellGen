@@ -25,7 +25,8 @@ HEADERS  += mainwindow.h \
     qublock.h \
     quellblock.h \
     aboutgame.h \
-    aboutauthor.h
+    aboutauthor.h \
+    osspecificvars.h
 
 FORMS    += mainwindow.ui \
     itworkspop.ui \

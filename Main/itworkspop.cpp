@@ -3,13 +3,14 @@
 #include <QDesktopWidget>
 #include "qublock.h"
 #include <unistd.h>
+#include "osspecificvars.h"
 ItWorksPop::ItWorksPop(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItWorksPop)
 {
     ui->setupUi(this);
     QPixmap im;
-    im.load("/run/media/fhh/Utilities/QuellGen/Resources/bgdefault.png");
+    im.load(QCoreApplication::applicationDirPath()+"/Resources/bgdefault.png");
     ui->bg->setPixmap(im);
     ui->bg->setScaledContents(true);
     move((QApplication::desktop()->width() - this->width())/2, (QApplication::desktop()->height() - this->height())/2);
@@ -32,7 +33,7 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
         {
             que[++tmp] = new QuBlock(this);
             que[tmp]->initAtlas(atlasp[layer0[tmp]],atlasp[layer1[tmp]],atlasp[layer2[tmp]],j,i);
-            que[tmp]->setGeometry(j*48,i*48,48,48);
+            que[tmp]->setGeometry(j*BLOCKSIZE,i*BLOCKSIZE,BLOCKSIZE,BLOCKSIZE);
             que[tmp]->show();
             if(layer0[tmp]>175)
             {
@@ -48,7 +49,7 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
             this->reloadBlock(*iter,w);
         }
     }
-    this->resize(48*w,48*h);
+    this->resize(BLOCKSIZE*w,BLOCKSIZE*h);
     this->ui->bg->hide();
 }
 void ItWorksPop::removeMap()

@@ -6,15 +6,7 @@
 #include <iostream>
 #include <aboutgame.h>
 #include "aboutauthor.h"
-#ifdef Q_OS_LINUX
-#define SEPARATOR "\n"
-#endif
-#ifdef Q_OS_WIN
-#define SEPARATOR "\r\n"
-#endif
-#ifdef Q_OS_MAC
-#define SEPARATOR "\r"
-#endif
+#include "osspecificvars.h"
 MainWindow* MainWindow::self;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -77,7 +69,7 @@ void MainWindow::open_selected()
 {
      QFileDialog *fileDialog = new QFileDialog(this);
      fileDialog->setWindowTitle(tr("打开关卡"));
-     fileDialog->setDirectory(".");
+     fileDialog->setDirectory(QCoreApplication::applicationDirPath());
      fileDialog->setNameFilter(tr("Quell关卡文件(*.gmp)"));
      fileDialog->setFileMode(QFileDialog::ExistingFile);
      fileDialog->setViewMode(QFileDialog::Detail);
@@ -91,16 +83,11 @@ void MainWindow::open_selected()
      //为人类阅读而优化2333
      FILE *fp;
      fp = fopen(fileName.toStdString().data(),"r+");
-     fscanf(fp,"[QuellGen level data file]");
-     fscanf(fp,SEPARATOR);
-     fscanf(fp,"Level name:%s",name);
-     fscanf(fp,SEPARATOR);
-     fscanf(fp,"Best solution:%d",&steps);
-     fscanf(fp,SEPARATOR);
-     fscanf(fp,"Width:%d",&w);
-     fscanf(fp,SEPARATOR);
-     fscanf(fp,"Height:%d",&h);
-     fscanf(fp,SEPARATOR);
+     fscanf(fp,"[QuellGen level data file]\n");
+     fscanf(fp,"Level name:%s\n",name);
+     fscanf(fp,"Best solution:%d\n",&steps);
+     fscanf(fp,"Width:%d\n",&w);
+     fscanf(fp,"Height:%d\n",&h);
      if(!layer0)
      {
         //释放上一次的内存
@@ -112,8 +99,7 @@ void MainWindow::open_selected()
      layer0 = new int[w*h];
      layer1 = new int[w*h];
      layer2 = new int[w*h];
-     fscanf(fp,"Layer 0:");
-     fprintf(fp,SEPARATOR);
+     fscanf(fp,"Layer 0:\n");
      int k=0;
      for(unsigned int i=0;i<h;i++)
      {
@@ -121,10 +107,9 @@ void MainWindow::open_selected()
          {
              fscanf(fp,"%d",&layer0[k++]);
          }
-         fscanf(fp,SEPARATOR);
+         fscanf(fp,"\n");
      }
-     fscanf(fp,"Layer 1:");
-     fprintf(fp,SEPARATOR);
+     fscanf(fp,"Layer 1:\n");
      k=0;
      for(unsigned int i=0;i<h;i++)
      {
@@ -132,10 +117,9 @@ void MainWindow::open_selected()
          {
              fscanf(fp,"%d",&layer1[k++]);
          }
-         fscanf(fp,SEPARATOR);
+         fscanf(fp,"\n");
      }
-     fscanf(fp,"Layer 2:");
-     fprintf(fp,SEPARATOR);
+     fscanf(fp,"Layer 2:\n");
      k=0;
      for(unsigned int i=0;i<h;i++)
      {
@@ -143,7 +127,7 @@ void MainWindow::open_selected()
          {
              fscanf(fp,"%d",&layer2[k++]);
          }
-         fscanf(fp,SEPARATOR);
+         fscanf(fp,"\n");
      }
      fclose(fp);
      refresh(w,h);
@@ -153,7 +137,7 @@ void MainWindow::save_selected()
     QFileDialog *fileDialog = new QFileDialog(this);
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
     fileDialog->setWindowTitle(tr("保存关卡"));
-    fileDialog->setDirectory(".");
+    fileDialog->setDirectory(QCoreApplication::applicationDirPath());
     fileDialog->setDefaultSuffix("gmp");
     fileDialog->setNameFilter(tr("Quell关卡文件(*.gmp)"));
     fileDialog->setFileMode(QFileDialog::ExistingFile);
@@ -165,18 +149,12 @@ void MainWindow::save_selected()
     }
     FILE *fp;
     fp = fopen(fileName.toStdString().data(),"w+");
-    fprintf(fp,"[QuellGen level data file]");
-    fprintf(fp,SEPARATOR);
-    fprintf(fp,"Level name:%s",name);
-    fprintf(fp,SEPARATOR);
-    fprintf(fp,"Best solution:%d",steps);
-    fprintf(fp,SEPARATOR);
-    fprintf(fp,"Width:%d",w);
-    fprintf(fp,SEPARATOR);
-    fprintf(fp,"Height:%d",h);
-    fprintf(fp,SEPARATOR);
-    fscanf(fp,"Layer 0:");
-    fprintf(fp,SEPARATOR);
+    fprintf(fp,"[QuellGen level data file]\n");
+    fprintf(fp,"Level name:%s\n",name);
+    fprintf(fp,"Best solution:%d\n",steps);
+    fprintf(fp,"Width:%d\n",w);
+    fprintf(fp,"Height:%d\n",h);
+    fscanf(fp,"Layer 0:\n");
     int k=0;
     for(unsigned int i=0;i<h;i++)
     {
@@ -184,10 +162,9 @@ void MainWindow::save_selected()
         {
             fprintf(fp,"%d ",layer0[k++]);
         }
-        fprintf(fp,SEPARATOR);
+        fprintf(fp,"\n");
     }
-    fprintf(fp,"Layer 1:");
-    fprintf(fp,SEPARATOR);
+    fprintf(fp,"Layer 1:\n");
     k=0;
     for(unsigned int i=0;i<h;i++)
     {
@@ -195,10 +172,9 @@ void MainWindow::save_selected()
         {
             fprintf(fp,"%d ",layer1[k++]);
         }
-        fprintf(fp,SEPARATOR);
+        fprintf(fp,"\n");
     }
-    fprintf(fp,"Layer 2:");
-    fprintf(fp,SEPARATOR);
+    fprintf(fp,"Layer 2:\n");
     k=0;
     for(unsigned int i=0;i<h;i++)
     {
@@ -206,7 +182,7 @@ void MainWindow::save_selected()
         {
             fprintf(fp,"%d ",layer2[k++]);
         }
-        fprintf(fp,SEPARATOR);
+        fprintf(fp,"\n");
     }
     fclose(fp);
 }

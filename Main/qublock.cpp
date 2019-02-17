@@ -1,3 +1,4 @@
+#include "osspecificvars.h"
 #include "qublock.h"
 #include "ui_qublock.h"
 #include "mainwindow.h"
@@ -10,6 +11,11 @@ QuBlock::QuBlock(QWidget *parent) :
     ui->second->setScaledContents(true);
     ui->third->setScaledContents(true);
     connect(ui->click,SIGNAL(clicked()),this,SLOT(clicked()));
+    ui->first->resize(BLOCKSIZE,BLOCKSIZE);
+    ui->second->resize(BLOCKSIZE,BLOCKSIZE);
+    ui->third->resize(BLOCKSIZE,BLOCKSIZE);
+    ui->click->resize(BLOCKSIZE,BLOCKSIZE);
+    this->resize(BLOCKSIZE,BLOCKSIZE);
 }
 
 QuBlock::~QuBlock()
