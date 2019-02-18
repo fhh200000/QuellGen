@@ -90,7 +90,8 @@ void MainWindow::open_selected()
      FILE *fp;
      fp = fopen(fileName.toStdString().data(),"r+");
      fscanf(fp,"[QuellGen level data file]\n");
-     fscanf(fp,"Level name:%s\n",name);
+     fscanf(fp,"Level name:%[^\n]",name);
+     fscanf(fp,"\n");
      fscanf(fp,"Best solution:%d\n",&steps);
      solution = new int[static_cast<unsigned>(steps)];
      fscanf(fp,"Solution:");

@@ -28,5 +28,6 @@ void InfoEditor::destroy()
     {
         MainWindow::self->name[i] = tmp[i];
     }
+    MainWindow::self->name[ba.length()] = '\0';
     MainWindow::self->steps = ui->lineEdit_2->text().toInt();
 }
