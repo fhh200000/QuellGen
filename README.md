@@ -31,3 +31,5 @@ Pause and review the previous codes...........................Done
 ---->点击方块时与主界面互动.......................................完成  
 ---->Reload texture when initalizing connected blocks.........Done  
 ---->加载连续性的方块时重载材质...................................完成  
+Pause and review the previous codes...........................Done  
+暂停，审查已经构建的代码..........................................完成 
