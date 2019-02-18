@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     qublock.cpp \
     quellblock.cpp \
     aboutgame.cpp \
-    aboutauthor.cpp
+    aboutauthor.cpp \
+    infoeditor.cpp
 
 HEADERS  += mainwindow.h \
     itworkspop.h \
@@ -26,10 +27,12 @@ HEADERS  += mainwindow.h \
     quellblock.h \
     aboutgame.h \
     aboutauthor.h \
-    osspecificvars.h
+    osspecificvars.h \
+    infoeditor.h
 
 FORMS    += mainwindow.ui \
     itworkspop.ui \
     qublock.ui \
     aboutgame.ui \
-    aboutauthor.ui
+    aboutauthor.ui \
+    infoeditor.ui

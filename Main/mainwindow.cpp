@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(save_selected()));
     connect(ui->actionGame,SIGNAL(triggered()),this,SLOT(aboutGame()));
     connect(ui->actionAuthor,SIGNAL(triggered()),this,SLOT(aboutAuthor()));
+    connect(ui->pushButton_4,SIGNAL(clicked()),this,SLOT(showinfo()));
     MainWindow::self = this;
 }
 
@@ -28,6 +29,11 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::showinfo()
+{
+    info = new InfoEditor(this);
+    info->show();
+}
 void MainWindow::aboutGame()
 {
     AboutGame *ab = new AboutGame();
@@ -86,6 +92,20 @@ void MainWindow::open_selected()
      fscanf(fp,"[QuellGen level data file]\n");
      fscanf(fp,"Level name:%s\n",name);
      fscanf(fp,"Best solution:%d\n",&steps);
+     solution = new int[static_cast<unsigned>(steps)];
+     fscanf(fp,"Solution:");
+     for (int i=0;i<steps;i++)
+     {
+        fscanf(fp,"%d",&solution[i]);
+     }
+     fscanf(fp,"\n");
+     soludrop = new int[static_cast<unsigned>(steps)];
+     fscanf(fp,"Soludrop:");
+     for (int i=0;i<steps;i++)
+     {
+        fscanf(fp,"%d",&soludrop[i]);
+     }
+     fscanf(fp,"\n");
      fscanf(fp,"Width:%d\n",&w);
      fscanf(fp,"Height:%d\n",&h);
      if(!layer0)
@@ -147,14 +167,27 @@ void MainWindow::save_selected()
     {
          fileName = fileDialog->selectedFiles().first();
     }
+    if(fileName=="")return;
     FILE *fp;
     fp = fopen(fileName.toStdString().data(),"w+");
     fprintf(fp,"[QuellGen level data file]\n");
     fprintf(fp,"Level name:%s\n",name);
     fprintf(fp,"Best solution:%d\n",steps);
+    fprintf(fp,"Solution:");
+    for (int i=0;i<steps;i++)
+    {
+       fprintf(fp,"%d ",solution[i]);
+    }
+    fprintf(fp,"\n");
+    fprintf(fp,"Soludrop:");
+    for (int i=0;i<steps;i++)
+    {
+       fprintf(fp,"%d ",soludrop[i]);
+    }
+    fprintf(fp,"\n");
     fprintf(fp,"Width:%d\n",w);
     fprintf(fp,"Height:%d\n",h);
-    fscanf(fp,"Layer 0:\n");
+    fprintf(fp,"Layer 0:\n");
     int k=0;
     for(unsigned int i=0;i<h;i++)
     {

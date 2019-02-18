@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>260</width>
-    <height>374</height>
+    <height>319</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>80</x>
       <y>10</y>
       <width>80</width>
       <height>25</height>
@@ -289,6 +289,19 @@
       <string>备用层：</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>10</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>关卡信息</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
