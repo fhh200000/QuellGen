@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionGame,SIGNAL(triggered()),this,SLOT(aboutGame()));
     connect(ui->actionAuthor,SIGNAL(triggered()),this,SLOT(aboutAuthor()));
     connect(ui->pushButton_4,SIGNAL(clicked()),this,SLOT(showinfo()));
+    name = new char[32];
     MainWindow::self = this;
 }
 

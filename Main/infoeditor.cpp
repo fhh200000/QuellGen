@@ -8,10 +8,8 @@ InfoEditor::InfoEditor(QWidget *parent) :
     ui->setupUi(this);
     QString temp = QString(MainWindow::self->name);
     ui->lineEdit->setText(temp);
-    //temp = QString::number(MainWindow::self->steps);
-    //ui->lineEdit_2->setText(temp);
     connect(ui->pushButton,SIGNAL(clicked()),this,SLOT(destroy()));
-    steps = new std::vector<step>(static_cast<unsigned>(MainWindow::self->steps+8));
+    steps = new std::vector<step>(static_cast<unsigned>(MainWindow::self->steps));
     char dir=0;
         for(int i=0;i<MainWindow::self->steps;i++)
         {
@@ -45,20 +43,21 @@ InfoEditor::InfoEditor(QWidget *parent) :
 
 InfoEditor::~InfoEditor()
 {
-    destroy();
     delete ui;
-    delete steps;
 }
 void InfoEditor::destroy()
 {
-    delete MainWindow::self->name;
     QByteArray ba = ui->lineEdit->text().toLatin1();
-    MainWindow::self->name = new char[32];
     char* tmp = ba.data();
     for(int i=0;i<ba.length();i++)
     {
         MainWindow::self->name[i] = tmp[i];
     }
     MainWindow::self->name[ba.length()] = '\0';
-    //MainWindow::self->steps = ui->lineEdit_2->text().toInt();
+    steps->clear();
+    delete steps;
+    steps = nullptr;
+    this->hide();
+    MainWindow::self->info = nullptr;
+    delete this;
 }

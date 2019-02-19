@@ -28,7 +28,7 @@ private slots:
     void aboutAuthor();
     void showinfo();
 public:
-    InfoEditor *info;
+    InfoEditor *info=nullptr;
     Ui::MainWindow *ui;
     ItWorksPop *pop=nullptr;
     int* layer0=nullptr;
@@ -36,7 +36,7 @@ public:
     int* layer2=nullptr;
     int steps = 0;
     unsigned int w,h;
-    char* name = new char[32];
+    char* name = nullptr;
     void loadinfo(int x,int y);
     int *solution,*soludrop;
 };
