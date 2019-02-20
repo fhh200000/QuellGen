@@ -9,12 +9,12 @@ InfoEditor::InfoEditor(QWidget *parent) :
     QString temp = QString(MainWindow::self->name);
     ui->lineEdit->setText(temp);
     connect(ui->pushButton,SIGNAL(clicked()),this,SLOT(destroy()));
-    steps = new std::vector<step>(static_cast<unsigned>(MainWindow::self->steps));
+    connect(ui->addButton,SIGNAL(clicked()),this,SLOT(addSteps()));
+    connect(ui->deleteButton,SIGNAL(clicked()),this,SLOT(removeSteps()));
     char dir=0;
         for(int i=0;i<MainWindow::self->steps;i++)
         {
-            steps->push_back(step{MainWindow::self->soludrop[i],MainWindow::self->solution[i]});
-            switch (MainWindow::self->solution[i])
+            switch (MainWindow::self->steplist->data()[i].direction)
             {
             case 0:
                 {
@@ -37,7 +37,7 @@ InfoEditor::InfoEditor(QWidget *parent) :
                 break;
                 }
             }
-            ui->listWidget->addItem("水滴："+QString::number(MainWindow::self->soludrop[i])+"  方向:"+QString(dir));
+            ui->listWidget->addItem("水滴："+QString::number(MainWindow::self->steplist->data()[i].drop)+"  方向："+QString(dir));
         }
 }
 
@@ -54,10 +54,56 @@ void InfoEditor::destroy()
         MainWindow::self->name[i] = tmp[i];
     }
     MainWindow::self->name[ba.length()] = '\0';
-    steps->clear();
-    delete steps;
-    steps = nullptr;
+    MainWindow::self->steps = ui->listWidget->count();
     this->hide();
     MainWindow::self->info = nullptr;
     delete this;
+}
+void InfoEditor::addSteps()
+{
+    char tmp;
+    int dir;
+    tmp = ui->dirIndex->text().toLatin1().front();
+    switch (tmp)
+    {
+    case 'W':
+        {
+        dir = 0;
+        break;
+        }
+    case 'D':
+        {
+        dir = 1;
+        break;
+        }
+    case 'S':
+        {
+        dir = 2;
+        break;
+        }
+    case 'A':
+        {
+        dir = 3;
+        break;
+        }
+    default:
+        {
+        QMessageBox::warning(nullptr,"提示","输入的方向无效！");
+        return;
+        }
+    }
+    MainWindow::self->steplist->push_back(step{ui->dropIndex->text().toInt(),dir});
+    ui->listWidget->addItem("水滴："+ui->dropIndex->text()+"  方向："+ui->dirIndex->text());
+}
+void InfoEditor::removeSteps()
+{
+    int serial = ui->listWidget->currentRow();
+    ui->listWidget->takeItem(serial);
+    std::vector<step>::iterator tmp = MainWindow::self->steplist->begin()+serial;
+    MainWindow::self->steplist->erase(tmp);
+}
+void InfoEditor::closeEvent(QCloseEvent *event)
+{
+    destroy();
+    event->accept();
 }

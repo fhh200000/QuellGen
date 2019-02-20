@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include "itworkspop.h"
 #include "infoeditor.h"
+typedef struct
+{
+    int drop;
+    int direction;
+}step;
 namespace Ui {
 class MainWindow;
 }
@@ -39,6 +44,7 @@ public:
     char* name = nullptr;
     void loadinfo(int x,int y);
     int *solution,*soludrop;
+    std::vector<step> *steplist;
 };
 
 #endif // MAINWINDOW_H

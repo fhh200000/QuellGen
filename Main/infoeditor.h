@@ -2,11 +2,7 @@
 #define INFOEDITOR_H
 
 #include <QDialog>
-typedef struct
-{
-    int drop;
-    int direction;
-}step;
+
 namespace Ui {
 class InfoEditor;
 }
@@ -21,9 +17,11 @@ public:
 
 private:
     Ui::InfoEditor *ui;
-    std::vector<step> *steps;
+    void closeEvent(QCloseEvent *event);
 private slots:
     void destroy();
+    void addSteps();
+    void removeSteps();
 };
 
 #endif // INFOEDITOR_H

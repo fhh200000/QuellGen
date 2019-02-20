@@ -94,7 +94,7 @@ void MainWindow::open_selected()
      fscanf(fp,"Level name:%[^\n]",name);
      fscanf(fp,"\n");
      fscanf(fp,"Best solution:%d\n",&steps);
-     solution = new int[static_cast<unsigned>(steps)];
+     /*solution = new int[static_cast<unsigned>(steps)];
      fscanf(fp,"Solution:");
      for (int i=0;i<steps;i++)
      {
@@ -106,6 +106,22 @@ void MainWindow::open_selected()
      for (int i=0;i<steps;i++)
      {
         fscanf(fp,"%d",&soludrop[i]);
+     }*/
+     steplist = new std::vector<step>();
+     fscanf(fp,"Solution:");
+     for (int i=0;i<steps;i++)
+     {
+         int tmpsolution;
+         fscanf(fp,"%d",&tmpsolution);
+         steplist->push_back(step{0,tmpsolution});
+     }
+     fscanf(fp,"\n");
+     fscanf(fp,"Soludrop:");
+     for (int i=0;i<steps;i++)
+     {
+         int tmpsoludrop;
+         fscanf(fp,"%d",&tmpsoludrop);
+         steplist->data()[i].drop=tmpsoludrop;
      }
      fscanf(fp,"\n");
      fscanf(fp,"Width:%d\n",&w);
@@ -178,13 +194,21 @@ void MainWindow::save_selected()
     fprintf(fp,"Solution:");
     for (int i=0;i<steps;i++)
     {
-       fprintf(fp,"%d ",solution[i]);
+        fprintf(fp,"%d ",steplist->data()[i].direction);
     }
+    /*for (int i=0;i<steps;i++)
+    {
+       fprintf(fp,"%d ",solution[i]);
+    }*/
     fprintf(fp,"\n");
     fprintf(fp,"Soludrop:");
-    for (int i=0;i<steps;i++)
+    /*for (int i=0;i<steps;i++)
     {
        fprintf(fp,"%d ",soludrop[i]);
+    }*/
+    for (int i=0;i<steps;i++)
+    {
+        fprintf(fp,"%d ",steplist->data()[i].drop);
     }
     fprintf(fp,"\n");
     fprintf(fp,"Width:%d\n",w);
