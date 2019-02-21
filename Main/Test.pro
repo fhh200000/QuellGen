@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     quellblock.cpp \
     aboutgame.cpp \
     aboutauthor.cpp \
-    infoeditor.cpp
+    infoeditor.cpp \
+    importaction.cpp
 
 HEADERS  += mainwindow.h \
     itworkspop.h \
@@ -28,7 +29,8 @@ HEADERS  += mainwindow.h \
     aboutgame.h \
     aboutauthor.h \
     osspecificvars.h \
-    infoeditor.h
+    infoeditor.h \
+    importaction.h
 
 FORMS    += mainwindow.ui \
     itworkspop.ui \
