@@ -2,7 +2,7 @@
 #define MAX_PATH_LENGTH 128
 static int parseDoc(const char* docname)
 {
-    int width=0,height,lspace,rspace=0;
+    int width,height,lspace=0,rspace=0;
     const unsigned char* layers;
     FILE *fp;
     //一个FILE指针就够了hahahaha
@@ -45,8 +45,9 @@ static int parseDoc(const char* docname)
         fprintf(fp,"Level name:%s\n",cur->name);
         attr_value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("width"));
         fprintf(fp,"Width:%s\n",attr_value);
-        lspace = width;
         sscanf(reinterpret_cast<const char*>(attr_value),"%d",&width);
+        lspace = width;
+        rspace = width;
         attr_value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("height"));
         fprintf(fp,"Height:%s\n",attr_value);
         layers = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("layers"));
@@ -56,21 +57,30 @@ static int parseDoc(const char* docname)
         const unsigned char* pos=attr_value;
         const char* tmpchr = reinterpret_cast<const char*>(pos);
         char* tmpchr2 =const_cast<char*>(tmpchr);
-        int datacount=0,lcurrent,rcurrent,tmp;
+        int datacount,lcurrent,rcurrent,tmp;
         for(int i=0;i<height;i++)
         {
             lcurrent = 0;
-            while(static_cast<void>((datacount++)),static_cast<int>(strtod(tmpchr2, &tmpchr2))==1)
+            rcurrent = 0;
+            datacount = 0;
+            while(datacount++,static_cast<int>(strtod(tmpchr2, &tmpchr2))==1)
             {
                 lcurrent++;
-                if(lcurrent==width) break;
+                if(lcurrent==width) goto out;
             }
+            printf("%d\n",datacount);
                 //datacount++;
-            for(int j=0;j<width-lcurrent-1;j++)
-                strtod(tmpchr2, &tmpchr2);
+            //for(int j=0;j<width-lcurrent-1;j++)
+             //   strtod(tmpchr2, &tmpchr2);
+             while(datacount++<width)
+                static_cast<int>(strtod(tmpchr2, &tmpchr2))==1?rcurrent++:rcurrent;
+            printf(" %d %d %d\n",lcurrent,rcurrent,datacount);
             lspace = lspace>lcurrent?lcurrent:lspace;
+            rspace = rspace>rcurrent?rcurrent:rspace;
+            out:;
         }
-        printf("%d\n",lspace);
+        fprintf(fp,"Left space:%d\n",lspace);
+        printf("%d\n",rspace);
         //-----------------------------
         fprintf(fp,"Layer 0:\n");
         pos=attr_value;
@@ -80,7 +90,7 @@ static int parseDoc(const char* docname)
         //skip spaces
             pos+=lspace*2;
             for(int j=lspace;j<width;j++)
-                 while(static_cast<void>(fprintf(fp,"%c",*pos)),static_cast<void>(datacount++),*pos++!=' ');
+                 while(fprintf(fp,"%c",*pos),datacount++,*pos++!=' ');
             fprintf(fp,"\n");
         }
         fprintf(fp,"Layer 1:\n");
@@ -89,7 +99,7 @@ static int parseDoc(const char* docname)
         {
             pos+=lspace*2;
             for(int j=lspace;j<width;j++)
-                while(static_cast<void>(fprintf(fp,"%c",*pos)),static_cast<void>(datacount++),*pos++!=' ');
+                while(fprintf(fp,"%c",*pos),datacount++,*pos++!=' ');
             fprintf(fp,"\n");
         }
         fprintf(fp,"Layer 2:\n");
@@ -111,7 +121,7 @@ static int parseDoc(const char* docname)
                 {
                     pos+=lspace*2;
                     for(int j=lspace;j<width;j++)
-                        while(static_cast<void>(fprintf(fp,"%c",*pos)),static_cast<void>(datacount++),*pos++!=' ');
+                        while(fprintf(fp,"%c",*pos),datacount++,*pos++!=' ');
                     fprintf(fp,"\n");
                 }
             break;
