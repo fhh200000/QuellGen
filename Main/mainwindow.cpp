@@ -211,7 +211,7 @@ void MainWindow::save_selected()
         fprintf(fp,"%d ",steplist->data()[i].drop);
     }
     fprintf(fp,"\n");
-    fprintf(fp,"Width:%d\n",w);
+     fprintf(fp,"Width:%d\n",w);
     fprintf(fp,"Height:%d\n",h);
     fprintf(fp,"Layer 0:\n");
     int k=0;
