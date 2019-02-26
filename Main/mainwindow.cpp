@@ -126,6 +126,8 @@ void MainWindow::open_selected()
      fscanf(fp,"\n");
      fscanf(fp,"Width:%d\n",&w);
      fscanf(fp,"Height:%d\n",&h);
+     fscanf(fp,"Left space:%d\n",&lspace);
+     fscanf(fp,"Right space:%d\n",&rspace);
      if(!layer0)
      {
         //释放上一次的内存
@@ -213,6 +215,8 @@ void MainWindow::save_selected()
     fprintf(fp,"\n");
      fprintf(fp,"Width:%d\n",w);
     fprintf(fp,"Height:%d\n",h);
+    fprintf(fp,"Left space:%d\n",lspace);
+    fprintf(fp,"Right space:%d\n",rspace);
     fprintf(fp,"Layer 0:\n");
     int k=0;
     for(unsigned int i=0;i<h;i++)
@@ -243,6 +247,7 @@ void MainWindow::save_selected()
         }
         fprintf(fp,"\n");
     }
+    fprintf(fp,"[End of file]");
     fclose(fp);
 }
 void MainWindow::loadinfo(int x,int y)

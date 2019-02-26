@@ -32,6 +32,7 @@ HEADERS  += mainwindow.h \
     infoeditor.h \
     importaction.h
 
+LIBS += -lxml2
 FORMS    += mainwindow.ui \
     itworkspop.ui \
     qublock.ui \

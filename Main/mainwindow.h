@@ -41,6 +41,7 @@ public:
     int* layer2=nullptr;
     int steps = 0;
     unsigned int w,h;
+    int lspace,rspace;
     char* name = nullptr;
     void loadinfo(int x,int y);
     int *solution,*soludrop;
