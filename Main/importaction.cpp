@@ -1,5 +1,60 @@
 #include "importaction.h"
 #define MAX_PATH_LENGTH 128
+/*
+ * Import name
+ * Still under construction
+static int parseDoc(const char* docname)
+{
+    vector<char*> id = vector<char*>();
+    vector<char*> name = vector<char*>();
+    int i=0;
+    xmlDocPtr doc;
+    xmlNodePtr cur;
+    xmlKeepBlanksDefault(0);
+    doc = xmlParseFile(docname);
+
+    if(doc == nullptr) {
+        fprintf(stderr, "doc error!\n");
+        return 0;
+    }
+
+    cur = xmlDocGetRootElement(doc);
+
+    if(cur == nullptr) {
+        fprintf(stderr, "root error!\n");
+        xmlFreeDoc(doc);
+        return 0;
+    }
+    cur = cur->children;
+    //匹配到第一条
+    printf("Now loading String data structure……\n");
+    while(strcmp((char*)xmlNodeGetContent(cur->children),"STR_LEVEL_ZEN_E1"))
+        cur = cur->next;
+    while(i++<244)
+        {
+        id.push_back((char*)xmlNodeGetContent(cur->children));
+        name.push_back((char*)xmlNodeGetContent(cur->children->next->next));
+        //printf("%s->%s\n",(char*)xmlNodeGetContent(cur->children),(char*)xmlNodeGetContent(cur->children->next->next));
+        cur = cur->next;
+        }
+    i=0;
+    while(i<244)
+        {
+        printf("%s->%s\n",id.data()[i],name.data()[i]);
+        i++;
+        }
+    xmlFreeDoc(doc);
+    return 0;
+}
+
+int main()
+{
+    const char* docname = "/home/fhh/桌面/strings.xml";
+    parseDoc(docname);
+    return 0;
+}
+
+ */
 static int parseDoc(const char* docname)
 {
     int width,height,lspace=0,rspace=0;
