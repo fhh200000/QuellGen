@@ -2,7 +2,9 @@
 #define IMPORTACTION_H
 #include <cstdio>
 #include <libxml/parser.h>
-
+#include <vector>
+#include <cstring>
+using namespace std;
 class ImportAction
 {
 public:

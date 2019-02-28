@@ -1,17 +1,24 @@
 #include "importaction.h"
 #define MAX_PATH_LENGTH 128
-/*
- * Import name
- * Still under construction
-static int parseDoc(const char* docname)
+using namespace std;
+static int parseDoc(const char* docname,const char* strname)
 {
-    vector<char*> id = vector<char*>();
-    vector<char*> name = vector<char*>();
-    int i=0;
+    //-----------------------------------
+    vector<char*> lvl_zen_e = vector<char*>();
+    vector<char*> lvl_classic = vector<char*>();
+    vector<char*> lvl_d = vector<char*>();
+    vector<char*> lvl_z = vector<char*>();
+    vector<char*> lvl_g = vector<char*>();
+    vector<char*> lvl_m = vector<char*>();
+    vector<char*> lvl_b = vector<char*>();
+    vector<char*> lvl_candy = vector<char*>();
+    vector<char*>* id;
+    int i=0,posi;
+    char* name;
     xmlDocPtr doc;
     xmlNodePtr cur;
     xmlKeepBlanksDefault(0);
-    doc = xmlParseFile(docname);
+    doc = xmlParseFile(strname);
 
     if(doc == nullptr) {
         fprintf(stderr, "doc error!\n");
@@ -32,55 +39,71 @@ static int parseDoc(const char* docname)
         cur = cur->next;
     while(i++<244)
         {
-        id.push_back((char*)xmlNodeGetContent(cur->children));
-        name.push_back((char*)xmlNodeGetContent(cur->children->next->next));
-        //printf("%s->%s\n",(char*)xmlNodeGetContent(cur->children),(char*)xmlNodeGetContent(cur->children->next->next));
+        switch((char)xmlNodeGetContent(cur->children)[10])
+        {
+            case 'G':
+            {
+                id = &lvl_g;break;
+            }
+            case 'M':
+            {
+                id = &lvl_m;break;
+            }
+            case 'B':
+            {
+                id = &lvl_b;break;
+            }
+            case 'D':
+            {
+                id = &lvl_d;break;
+            }
+            case 'Z':
+            {
+                id = (char)xmlNodeGetContent(cur->children)[11]=='E'?&lvl_zen_e:&lvl_z;break;
+            }
+            case 'C':
+            {
+                id = (char)xmlNodeGetContent(cur->children)[11]=='A'?&lvl_candy:&lvl_classic;break;
+            }
+            default:
+            {
+                printf("Failed!\n%c\n",(char)xmlNodeGetContent(cur->children)[10]);return 0;
+            }
+        }
+            id->push_back((char*)xmlNodeGetContent(cur->children->next->next));
         cur = cur->next;
         }
     i=0;
-    while(i<244)
-        {
-        printf("%s->%s\n",id.data()[i],name.data()[i]);
-        i++;
-        }
+
+    for(vector<char*>::iterator i= lvl_classic.begin();i!=lvl_classic.end();i++)
+        printf("%s\n",*i);
     xmlFreeDoc(doc);
-    return 0;
-}
-
-int main()
-{
-    const char* docname = "/home/fhh/桌面/strings.xml";
-    parseDoc(docname);
-    return 0;
-}
-
- */
-static int parseDoc(const char* docname)
-{
+    //-----------------------------------
     int width,height,lspace=0,rspace=0;
     const unsigned char* layers;
     FILE *fp;
     //一个FILE指针就够了hahahaha
     char path[MAX_PATH_LENGTH];
-    xmlDocPtr doc;
-    xmlNodePtr cur;
     xmlKeepBlanksDefault(0);
     doc = xmlParseFile(docname);
 
-    if(doc == nullptr) {
+    if(doc == nullptr)
+    {
         fprintf(stderr, "doc error!\n");
         return 0;
     }
 
     cur = xmlDocGetRootElement(doc);
 
-    if(cur == nullptr) {
+    if(cur == nullptr)
+    {
         fprintf(stderr, "root error!\n");
         xmlFreeDoc(doc);
         return 0;
     }
 
-    if(xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("serialise"))) {
+    if(xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("serialise")))
+    {
         printf("end\n");
         return 0;
     }
@@ -91,13 +114,31 @@ static int parseDoc(const char* docname)
     for(int i=0;i<13;i++)
             cur = cur->next;
     xmlChar* attr_value = nullptr;
-    while(cur != nullptr) {
+    while(cur != nullptr)
+    {
         printf("Processing Level %d.%d.%d\n",(curr/16)+1,(curr&12)/4+1,(curr&3)+1);
         sprintf(path,"/home/fhh/桌面/tmp/%d.%d.%d.gmp",(curr/16)+1,(curr&12)/4+1,(curr&3)+1);
         printf("%s\n",path);
         fp = fopen(path,"w");
         fprintf(fp,"[QuellGen level data file]\n");
-        fprintf(fp,"Level name:%s\n",cur->name);
+        fprintf(fp,"Level ID:%s\n",cur->name);
+        //Get name--------
+        switch(cur->name[4])
+        {
+            case 'd':
+            {
+                sscanf((char*)cur->name,"lvl_d%d\n",&posi);
+                name = lvl_d.data()[posi-1];
+                break;
+            }
+            default:
+            {
+                name = (char*)cur->name;
+            }
+        }
+        printf("%c\n",cur->name[4]);
+        //----------------
+        fprintf(fp,"Level name:%s\n",name);
         attr_value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("width"));
         //fprintf(fp,"Width:%s\n",attr_value);
         sscanf(reinterpret_cast<const char*>(attr_value),"%d",&width);
@@ -203,6 +244,7 @@ static int parseDoc(const char* docname)
 int main()
 {
     const char* docname = "/home/fhh/桌面/levels_zen.txt";
-    parseDoc(docname);
+    const char* strname = "/home/fhh/桌面/strings.xml";
+    parseDoc(docname,strname);
     return 0;
 }

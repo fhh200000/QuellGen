@@ -91,6 +91,9 @@ void MainWindow::open_selected()
      FILE *fp;
      fp = fopen(fileName.toStdString().data(),"r+");
      fscanf(fp,"[QuellGen level data file]\n");
+     //ID不需要在解析地图时导入
+     fscanf(fp,"Level ID:%*[^\n]");
+     fscanf(fp,"\n");
      fscanf(fp,"Level name:%[^\n]",name);
      fscanf(fp,"\n");
      fscanf(fp,"Best solution:%d\n",&steps);
