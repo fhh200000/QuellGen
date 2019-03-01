@@ -13,8 +13,10 @@ static int parseDoc(const char* docname,const char* strname)
     vector<char*> lvl_b = vector<char*>();
     vector<char*> lvl_candy = vector<char*>();
     vector<char*>* id;
-    int i=0,posi;
-    char* name;
+    int classindex[] = {21,12,11,2,22,0,27,29,37,13,15,32,28,16,38,3,25,33,39,26,36,9,19,20,23,14,8,7,30,10,34,1,31,18,17,35,24,6,51,4,52,52};
+    int i=0,posi,tmp,reloadindex=0;
+    int needReload=0;
+    char* name=nullptr;
     xmlDocPtr doc;
     xmlNodePtr cur;
     xmlKeepBlanksDefault(0);
@@ -35,11 +37,11 @@ static int parseDoc(const char* docname,const char* strname)
     cur = cur->children;
     //匹配到第一条
     printf("Now loading String data structure……\n");
-    while(strcmp((char*)xmlNodeGetContent(cur->children),"STR_LEVEL_ZEN_E1"))
+    while(strcmp(reinterpret_cast<char*>(xmlNodeGetContent(cur->children)),"STR_LEVEL_ZEN_E1"))
         cur = cur->next;
     while(i++<244)
         {
-        switch((char)xmlNodeGetContent(cur->children)[10])
+        switch(xmlNodeGetContent(cur->children)[10])
         {
             case 'G':
             {
@@ -59,24 +61,26 @@ static int parseDoc(const char* docname,const char* strname)
             }
             case 'Z':
             {
-                id = (char)xmlNodeGetContent(cur->children)[11]=='E'?&lvl_zen_e:&lvl_z;break;
+                id = xmlNodeGetContent(cur->children)[11]=='E'?&lvl_zen_e:&lvl_z;break;
             }
             case 'C':
             {
-                id = (char)xmlNodeGetContent(cur->children)[11]=='A'?&lvl_candy:&lvl_classic;break;
+                id = xmlNodeGetContent(cur->children)[11]=='A'?&lvl_candy:&lvl_classic;
+                if(lvl_classic.size()==5)lvl_classic.push_back(const_cast<char*>(""));
+                break;
             }
             default:
             {
-                printf("Failed!\n%c\n",(char)xmlNodeGetContent(cur->children)[10]);return 0;
+                printf("Failed!\n%c\n",(xmlNodeGetContent(cur->children)[10]));return 0;
             }
         }
-            id->push_back((char*)xmlNodeGetContent(cur->children->next->next));
+            id->push_back(reinterpret_cast<char*>(xmlNodeGetContent(cur->children->next->next)));
         cur = cur->next;
         }
     i=0;
-
-    for(vector<char*>::iterator i= lvl_classic.begin();i!=lvl_classic.end();i++)
-        printf("%s\n",*i);
+    //fixed a name bug caused by Quell Zen 233333
+    lvl_classic.push_back(lvl_zen_e.front());
+    lvl_classic.push_back(const_cast<char*>("Candle"));
     xmlFreeDoc(doc);
     //-----------------------------------
     int width,height,lspace=0,rspace=0;
@@ -116,6 +120,8 @@ static int parseDoc(const char* docname,const char* strname)
     xmlChar* attr_value = nullptr;
     while(cur != nullptr)
     {
+        needReload = 0;
+        name = nullptr;
         printf("Processing Level %d.%d.%d\n",(curr/16)+1,(curr&12)/4+1,(curr&3)+1);
         sprintf(path,"/home/fhh/桌面/tmp/%d.%d.%d.gmp",(curr/16)+1,(curr&12)/4+1,(curr&3)+1);
         printf("%s\n",path);
@@ -127,16 +133,94 @@ static int parseDoc(const char* docname,const char* strname)
         {
             case 'd':
             {
-                sscanf((char*)cur->name,"lvl_d%d\n",&posi);
+                tmp = atoi((reinterpret_cast<const char*>(cur->name))+5);
+                if(!tmp)
+                {
+                    needReload=1;
+                    goto outswitch;
+                }
+                sscanf(reinterpret_cast<const char*>(cur->name),"lvl_d%d\n",&posi);
                 name = lvl_d.data()[posi-1];
+                break;
+            }
+            case 'z':
+            {
+                tmp = atoi((reinterpret_cast<const char*>(cur->name))+5);
+                if(!tmp)
+                {
+                    needReload=1;
+                    goto outswitch;
+                }
+                sscanf(reinterpret_cast<const char*>(cur->name),"lvl_z%d\n",&posi);
+                name = lvl_z.data()[posi-1];
+                break;
+            }
+            case 'g':
+            {
+                tmp = atoi((reinterpret_cast<const char*>(cur->name))+5);
+                if(!tmp)
+                {
+                    needReload=1;
+                    goto outswitch;
+                }
+                sscanf(reinterpret_cast<const char*>(cur->name),"lvl_g%d\n",&posi);
+                name = lvl_d.data()[posi-1];
+                break;
+            }
+            case 'c':
+            {
+                tmp = (cur->name[9]=='_');//select "candy"
+                    if(!tmp)
+                    {
+                        needReload=1;
+                        goto outswitch;
+                    }
+                sscanf(reinterpret_cast<const char*>(cur->name),"lvl_candy_%d\n",&posi);
+                name = lvl_candy.data()[posi-1];
+                break;
+            }
+            case 'b':
+            {
+                tmp = atoi((reinterpret_cast<const char*>(cur->name))+5);
+                if(!tmp)
+                {
+                    needReload=1;
+                    goto outswitch;
+                }
+                sscanf(reinterpret_cast<const char*>(cur->name),"lvl_b%d\n",&posi);
+                name = lvl_b.data()[posi-1];
+                break;
+            }
+            case 'm':
+            {
+                tmp = atoi((reinterpret_cast<const char*>(cur->name))+5);
+                if(!tmp)
+                {
+                    needReload=1;
+                    goto outswitch;
+                }
+                sscanf(reinterpret_cast<const char*>(cur->name),"lvl_m%d\n",&posi);
+                name = lvl_m.data()[posi-1];
+                break;
+            }
+            case 'q':
+            {
+                sscanf(reinterpret_cast<const char*>(cur->name),"lvl_qm_e%d\n",&posi);
+                name = lvl_zen_e.data()[posi-1];
                 break;
             }
             default:
             {
-                name = (char*)cur->name;
+                needReload=1;
+            }
+
+            outswitch:if(needReload)
+            {
+                //printf("%s:%s\n",path,(char*)cur->name);
+                //name = (char*)cur->name;
+                name = lvl_classic.data()[classindex[reloadindex++]];
             }
         }
-        printf("%c\n",cur->name[4]);
         //----------------
         fprintf(fp,"Level name:%s\n",name);
         attr_value = xmlGetProp(cur, reinterpret_cast<const xmlChar*>("width"));
@@ -164,10 +248,10 @@ static int parseDoc(const char* docname,const char* strname)
             lcurrent = 0;
             rcurrent = 0;
             datacount = 0;
-            while(datacount++,static_cast<int>(strtod(tmpchr2, &tmpchr2))==1)
+            while(static_cast<void>(datacount++),static_cast<int>(strtod(tmpchr2, &tmpchr2))==1)
             {
                 lcurrent++;
-                if(lcurrent==width) goto out;
+                if(lcurrent==width) goto out2;
             }
                 //datacount++;
             //for(int j=0;j<width-lcurrent-1;j++)
@@ -176,7 +260,7 @@ static int parseDoc(const char* docname,const char* strname)
                 static_cast<int>(strtod(tmpchr2, &tmpchr2))==1?rcurrent++:rcurrent;
             lspace = lspace>lcurrent?lcurrent:lspace;
             rspace = rspace>rcurrent?rcurrent:rspace;
-            out:;
+            out2:;
         }
         fprintf(fp,"Width:%d\n",width-lspace-rspace);
         fprintf(fp,"Height:%d\n",height);
@@ -191,7 +275,7 @@ static int parseDoc(const char* docname,const char* strname)
         //skip spaces
             pos+=lspace*2;
             for(int j=lspace;j<width-rspace;j++)
-                 while(fprintf(fp,"%c",*pos),datacount++,*pos++!=' ');
+                 while(static_cast<void>(fprintf(fp,"%c",*pos)),static_cast<void>(datacount++),*pos++!=' ');
             fprintf(fp,"\n");
             pos+=rspace*2;
         }
@@ -201,7 +285,7 @@ static int parseDoc(const char* docname,const char* strname)
         {
             pos+=lspace*2;
             for(int j=lspace;j<width-rspace;j++)
-                 while(fprintf(fp,"%c",*pos),datacount++,*pos++!=' ');
+                 while(static_cast<void>(fprintf(fp,"%c",*pos)),static_cast<void>(datacount++),*pos++!=' ');
             fprintf(fp,"\n");
             pos+=rspace*2;
         }
@@ -224,7 +308,7 @@ static int parseDoc(const char* docname,const char* strname)
                 {
                     pos+=lspace*2;
                     for(int j=lspace;j<width-rspace;j++)
-                        while(fprintf(fp,"%c",*pos),datacount++,*pos++!=' ');
+                        while(static_cast<void>(fprintf(fp,"%c",*pos)),static_cast<void>(datacount++),*pos++!=' ');
                     fprintf(fp,"\n");
                     pos+=rspace*2;
                 }
@@ -241,10 +325,9 @@ static int parseDoc(const char* docname,const char* strname)
     return 0;
 }
 
-int main()
+void ImportAction::loadinfo(char* docname,char* strname)
 {
-    const char* docname = "/home/fhh/桌面/levels_zen.txt";
-    const char* strname = "/home/fhh/桌面/strings.xml";
+    docname = "/home/fhh/桌面/levels_zen.txt";
+    strname = "/home/fhh/桌面/strings.xml";
     parseDoc(docname,strname);
-    return 0;
 }

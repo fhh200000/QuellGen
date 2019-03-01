@@ -7,6 +7,7 @@
 #include <aboutgame.h>
 #include "aboutauthor.h"
 #include "osspecificvars.h"
+#include "importaction.h"
 MainWindow* MainWindow::self;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionGame,SIGNAL(triggered()),this,SLOT(aboutGame()));
     connect(ui->actionAuthor,SIGNAL(triggered()),this,SLOT(aboutAuthor()));
     connect(ui->pushButton_4,SIGNAL(clicked()),this,SLOT(showinfo()));
+    connect(ui->actionImport,SIGNAL(triggered()),this,SLOT(import()));
     name = new char[32];
     MainWindow::self = this;
 }
@@ -259,4 +261,8 @@ void MainWindow::loadinfo(int x,int y)
     ui->statusBar->showMessage(data,-1);
     ui->detailed->setEnabled(true);
     ui->l1->setCurrentIndex(layer0[x+y*static_cast<int>(w)]);
+}
+void MainWindow::import()
+{
+    ImportAction::loadinfo(const_cast<char*>(""),const_cast<char*>(""));
 }

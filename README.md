@@ -2,8 +2,8 @@ A Qt-C++ tool that helps Quell gamers modify level configurations.
 一个为Quell玩家设计的关卡编辑工具(基于Qt/C++).  
 The main purpose of this tool is to learn C++/Qt effectively.  
 该工具的主要目的是为了作者能够有效地学习C++/Qt.  
-Note:This tool **IS NOT COMPLETED**(10% so far),so please be patient.  
-注意：这个工具**没有开发完成**(目前大约10%)，所以请保持耐心。  
+Note:This tool **IS NOT COMPLETED**(50% so far),so please be patient.  
+注意：这个工具**没有开发完成**(目前大约50%)，所以请保持耐心。  
 I am not a pigeon so I promise it will continue.#(hilarious)  
 我不是鸽子，所以我不咕咕。#(滑稽)  
   
@@ -33,9 +33,13 @@ Pause and review the previous codes...........................Done
 ---->加载连续性的方块时重载材质...................................完成  
 Pause and review the previous codes...........................Done  
 暂停，审查已经构建的代码..........................................完成  
--->Import function............................................Running  
--->导入功能....................................................正在进行  
+-->Import function............................................Done  
+-->导入功能....................................................完成  
 ---->Split main data into single files........................Done  
 ---->将主数据分离至单文件中......................................完成  
 Rush to school.................................................Done  
 赶去学校........................................................完成  
+---->Read name strings from strings.xml........................Done  
+---->从strings.xml中读取关卡名称字符串............................完成  
+Pause and review the previous codes...........................Done  
+暂停，审查已经构建的代码..........................................完成  

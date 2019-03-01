@@ -32,6 +32,7 @@ private slots:
     void aboutGame();
     void aboutAuthor();
     void showinfo();
+    void import();
 public:
     InfoEditor *info=nullptr;
     Ui::MainWindow *ui;

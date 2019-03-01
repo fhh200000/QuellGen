@@ -9,6 +9,7 @@ class ImportAction
 {
 public:
     ImportAction();
+    static void loadinfo(char* docname,char* strname);
 };
 
 #endif // IMPORTACTION_H
