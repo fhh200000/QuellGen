@@ -1,7 +1,8 @@
 #include "importaction.h"
+#include <QDebug>
 #define MAX_PATH_LENGTH 128
 using namespace std;
-static int parseDoc(const char* docname,const char* strname)
+static int parseDoc(const char* docname,const char* strname,const char* filelocation)
 {
     //-----------------------------------
     vector<char*> lvl_zen_e = vector<char*>();
@@ -123,7 +124,7 @@ static int parseDoc(const char* docname,const char* strname)
         needReload = 0;
         name = nullptr;
         printf("Processing Level %d.%d.%d\n",(curr/16)+1,(curr&12)/4+1,(curr&3)+1);
-        sprintf(path,"/home/fhh/桌面/tmp/%d.%d.%d.gmp",(curr/16)+1,(curr&12)/4+1,(curr&3)+1);
+        sprintf(path,filelocation,(curr/16)+1,(curr&12)/4+1,(curr&3)+1);
         printf("%s\n",path);
         fp = fopen(path,"w");
         fprintf(fp,"[QuellGen level data file]\n");
@@ -325,9 +326,10 @@ static int parseDoc(const char* docname,const char* strname)
     return 0;
 }
 
-void ImportAction::loadinfo(char* docname,char* strname)
+void ImportAction::loadinfo(char* docname,char* strname,char* filelocation)
 {
-    docname = "/home/fhh/桌面/levels_zen.txt";
-    strname = "/home/fhh/桌面/strings.xml";
-    parseDoc(docname,strname);
+    //docname = "/home/fhh/桌面/levels_zen.txt";
+    //strname = "/home/fhh/桌面/strings.xml";
+    parseDoc(docname,strname,filelocation);
+    qDebug()<<"  "<<docname<<"  "<<strname<<"   "<<filelocation;
 }

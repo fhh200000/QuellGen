@@ -88,6 +88,7 @@ void MainWindow::open_selected()
           fileName = fileDialog->selectedFiles().first();
      }
      qDebug()<<fileName<<endl;
+     delete(fileDialog);
      if(fileName=="")return;
      //为人类阅读而优化2333
      FILE *fp;
@@ -99,19 +100,6 @@ void MainWindow::open_selected()
      fscanf(fp,"Level name:%[^\n]",name);
      fscanf(fp,"\n");
      fscanf(fp,"Best solution:%d\n",&steps);
-     /*solution = new int[static_cast<unsigned>(steps)];
-     fscanf(fp,"Solution:");
-     for (int i=0;i<steps;i++)
-     {
-        fscanf(fp,"%d",&solution[i]);
-     }
-     fscanf(fp,"\n");
-     soludrop = new int[static_cast<unsigned>(steps)];
-     fscanf(fp,"Soludrop:");
-     for (int i=0;i<steps;i++)
-     {
-        fscanf(fp,"%d",&soludrop[i]);
-     }*/
      steplist = new std::vector<step>();
      fscanf(fp,"Solution:");
      for (int i=0;i<steps;i++)
@@ -193,6 +181,7 @@ void MainWindow::save_selected()
          fileName = fileDialog->selectedFiles().first();
     }
     if(fileName=="")return;
+    delete(fileDialog);
     FILE *fp;
     fp = fopen(fileName.toStdString().data(),"w+");
     fprintf(fp,"[QuellGen level data file]\n");
@@ -264,5 +253,50 @@ void MainWindow::loadinfo(int x,int y)
 }
 void MainWindow::import()
 {
-    ImportAction::loadinfo(const_cast<char*>(""),const_cast<char*>(""));
+    QString levelname,stringname,outdir;
+//level data------------------------------------------------
+    QFileDialog *fileDialog = new QFileDialog(this);
+    fileDialog->setWindowTitle(tr("打开关卡数据文件"));
+    fileDialog->setDirectory(QCoreApplication::applicationDirPath());
+    fileDialog->setNameFilter(tr("Quell关卡数据文件(*.txt)"));
+    fileDialog->setFileMode(QFileDialog::ExistingFile);
+    fileDialog->setViewMode(QFileDialog::Detail);
+    if(fileDialog->exec())
+    {
+         levelname = fileDialog->selectedFiles().first();
+    }
+    delete(fileDialog);
+    if(levelname=="")return;
+    //----------------------------------------------------------
+    //string data------------------------------------------------
+    fileDialog = new QFileDialog(this);
+    fileDialog->setWindowTitle(tr("打开关卡字符串文件"));
+    fileDialog->setDirectory(QCoreApplication::applicationDirPath());
+    fileDialog->setNameFilter(tr("Quell关卡字符串文件(*.xml)"));
+    fileDialog->setFileMode(QFileDialog::ExistingFile);
+    fileDialog->setViewMode(QFileDialog::Detail);
+    if(fileDialog->exec())
+    {
+         stringname = fileDialog->selectedFiles().first();
+    }
+    delete(fileDialog);
+    if(stringname=="")return;
+    //----------------------------------------------------------
+    //string savedir------------------------------------------------
+    fileDialog = new QFileDialog(this);
+    fileDialog->setWindowTitle(tr("打开关卡保存文件夹"));
+    fileDialog->setDirectory(QCoreApplication::applicationDirPath());
+    fileDialog->setFileMode(QFileDialog::Directory);
+    fileDialog->setViewMode(QFileDialog::Detail);
+    if(fileDialog->exec())
+    {
+         outdir = fileDialog->selectedFiles().first();
+    }
+    delete(fileDialog);
+    if(outdir=="")return;
+    outdir.append("/%d.%d.%d.gmp");
+    //----------------------------------------------------------
+    ImportAction::loadinfo(const_cast<char*>(levelname.toStdString().data()),\
+                           const_cast<char*>(stringname.toStdString().data()),\
+                           const_cast<char*>(outdir.toStdString().data()));
 }

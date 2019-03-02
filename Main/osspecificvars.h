@@ -13,5 +13,8 @@
 #ifdef _WIN32
 //Windows here
 #define BLOCKSIZE 36
+#pragma warning(disable:4068)
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
 #endif // OSSPECIFICVARS_H

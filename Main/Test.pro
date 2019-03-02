@@ -31,7 +31,9 @@ HEADERS  += mainwindow.h \
     osspecificvars.h \
     infoeditor.h \
     importaction.h
-
+unix {
+        QMAKE_CXXFLAGS_WARN_ON += -Wno-unknown-pragmas
+    }
 LIBS += -lxml2
 FORMS    += mainwindow.ui \
     itworkspop.ui \
