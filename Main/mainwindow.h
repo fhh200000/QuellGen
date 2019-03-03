@@ -47,6 +47,6 @@ public:
     void loadinfo(int x,int y);
     int *solution,*soludrop;
     std::vector<step> *steplist;
+    int lvlindex;
 };
-
 #endif // MAINWINDOW_H

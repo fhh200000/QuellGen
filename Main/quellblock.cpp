@@ -31,7 +31,7 @@ void QuellBlock::loadAtlas(void)
         rockstyle1[i].load(filelocation);
         printf("%d of 48 rock-style1 initalized.\n",i);
     }
-    //Rocks style 1
+    //Rocks style 2
     rockstyle2 = new QPixmap[49];
     location = QCoreApplication::applicationDirPath()+"/Resources/Atlas/Zen/rock-style2/";
     for(int i=0;i<=48;i++)

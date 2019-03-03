@@ -4,6 +4,7 @@
 #include "qublock.h"
 #include <unistd.h>
 #include "osspecificvars.h"
+#include "mainwindow.h"
 ItWorksPop::ItWorksPop(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItWorksPop)
@@ -37,7 +38,7 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
             que[tmp]->show();
             if(layer0[tmp]>175)
             {
-                extrablock a={i*w+j,w,layer0[tmp],2};
+                extrablock a={i*w+j,w,layer0[tmp]};
                 spec.push_back(a);
             }
         }
@@ -65,7 +66,9 @@ void ItWorksPop::removeMap()
 }
 void ItWorksPop::reloadBlock(extrablock in, int width)
 {
-    QPixmap * rock = in.style==1?QuellBlock::rockstyle1:QuellBlock::rockstyle2;
+    QPixmap * rock = QuellBlock::rockstyle1;
+    if(MainWindow::self->lvlindex==4||MainWindow::self->lvlindex==7)
+        rock = QuellBlock::rockstyle2;
     switch (in.index)
     {
         case 176:

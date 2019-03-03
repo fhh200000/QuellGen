@@ -88,8 +88,10 @@ void MainWindow::open_selected()
           fileName = fileDialog->selectedFiles().first();
      }
      qDebug()<<fileName<<endl;
-     delete(fileDialog);
      if(fileName=="")return;
+     sscanf(QFileInfo(fileName).fileName().toStdString().data(),"%d",&(MainWindow::lvlindex));
+     printf("%d\n",MainWindow::lvlindex);
+     delete (fileDialog);
      //为人类阅读而优化2333
      FILE *fp;
      fp = fopen(fileName.toStdString().data(),"r+");
