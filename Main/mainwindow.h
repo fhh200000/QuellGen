@@ -33,6 +33,7 @@ private slots:
     void aboutAuthor();
     void showinfo();
     void import();
+    void exportxml();
 public:
     InfoEditor *info=nullptr;
     Ui::MainWindow *ui;

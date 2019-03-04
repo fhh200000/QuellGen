@@ -321,7 +321,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionImport"/>
     <addaction name="separator"/>
-    <addaction name="action_2"/>
+    <addaction name="actionExport"/>
     <addaction name="separator"/>
     <addaction name="actionPreview"/>
     <addaction name="separator"/>
@@ -381,7 +381,7 @@
     <string>保存……</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="actionExport">
    <property name="text">
     <string>导出……</string>
    </property>

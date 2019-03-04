@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     aboutgame.cpp \
     aboutauthor.cpp \
     infoeditor.cpp \
-    importaction.cpp
+    importaction.cpp \
+    exportaction.cpp
 
 HEADERS  += mainwindow.h \
     itworkspop.h \
@@ -30,7 +31,8 @@ HEADERS  += mainwindow.h \
     aboutauthor.h \
     osspecificvars.h \
     infoeditor.h \
-    importaction.h
+    importaction.h \
+    exportaction.h
 unix {
         QMAKE_CXXFLAGS_WARN_ON += -Wno-unknown-pragmas
     }

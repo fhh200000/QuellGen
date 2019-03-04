@@ -1,8 +1,8 @@
 #include "importaction.h"
 #include <QDebug>
-#define MAX_PATH_LENGTH 128
+
 using namespace std;
-static int parseDoc(const char* docname,const char* strname,const char* filelocation)
+static int parseDoc(const char* docname,const char* strname,char* filelocation)
 {
     //-----------------------------------
     vector<char*> lvl_zen_e = vector<char*>();
@@ -323,13 +323,38 @@ static int parseDoc(const char* docname,const char* strname,const char* fileloca
         curr++;
     }
     xmlFreeDoc(doc);
+    filelocation[strlen(filelocation)-12]='\0';
+    QString tmpstr = QString(filelocation);
+    tmpstr.append("general.gmp");
+    filelocation = tmpstr.toLocal8Bit().data();
+    printf("%s\n",filelocation);
+    fflush(stdin);
+    fp = fopen(filelocation,"w");
+    fprintf(fp,"[QuellGen level general file]\n\
+Count of lvl_zen_e:%d\n\
+Count of lvl_classic:%d\n\
+Count of lvl_d:%d\n\
+Count of lvl_z:%d\n\
+Count of lvl_g:%d\n\
+Count of lvl_m:%d\n\
+Count of lvl_b:%d\n\
+Count od lvl_candy:%d\n\
+[End of file]",\
+            static_cast<int>(lvl_zen_e.size()),\
+            static_cast<int>(lvl_classic.size()),\
+            static_cast<int>(lvl_d.size()),\
+            static_cast<int>(lvl_z.size()),\
+            static_cast<int>(lvl_g.size()),\
+            static_cast<int>(lvl_m.size()),\
+            static_cast<int>(lvl_b.size()),\
+            static_cast<int>(lvl_candy.size())\
+            );
+    fclose(fp);
     return 0;
 }
 
 void ImportAction::loadinfo(char* docname,char* strname,char* filelocation)
 {
-    //docname = "/home/fhh/桌面/levels_zen.txt";
-    //strname = "/home/fhh/桌面/strings.xml";
     parseDoc(docname,strname,filelocation);
-    qDebug()<<"  "<<docname<<"  "<<strname<<"   "<<filelocation;
 }
+

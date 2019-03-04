@@ -16,5 +16,6 @@
 #pragma warning(disable:4068)
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
+#define MAX_PATH_LENGTH 128
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 #endif // OSSPECIFICVARS_H
