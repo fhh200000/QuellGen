@@ -1,7 +1,66 @@
-#include "exportaction.h"
-
-void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
+#include <cstdio>
+#include <libxml/parser.h>
+#include <cstring>
+#include <vector>
+#define MAX_PATH_LENGTH 128
+using namespace std;
+int saveinfo()
 {
+    FILE *fp;
+    unsigned long count;
+    fp = fopen("/home/fhh/桌面/tmp3/general.gmp","r");
+    fscanf(fp,"[QuellGen level general file]\n");
+    fscanf(fp,"Count of lvl_zen_e:%ld\n",&count);
+    vector<xmlNodePtr> lvl_zen_e = vector<xmlNodePtr>(count);
+    fscanf(fp,"Count of lvl_classic:%ld\n",&count);
+    vector<xmlNodePtr> lvl_classic = vector<xmlNodePtr>(count);
+    fscanf(fp,"Count of lvl_d:%ld\n",&count);
+    vector<xmlNodePtr> lvl_d = vector<xmlNodePtr>(count);
+    fscanf(fp,"Count of lvl_z:%ld\n",&count);
+    vector<xmlNodePtr> lvl_z = vector<xmlNodePtr>(count);
+    fscanf(fp,"Count of lvl_g:%ld\n",&count);
+    vector<xmlNodePtr> lvl_g = vector<xmlNodePtr>(count);
+    fscanf(fp,"Count of lvl_m:%ld\n",&count);
+    vector<xmlNodePtr> lvl_m = vector<xmlNodePtr>(count);
+    fscanf(fp,"Count of lvl_b:%ld\n",&count);
+    vector<xmlNodePtr> lvl_b = vector<xmlNodePtr>(count);
+    fscanf(fp,"Count of lvl_candy:%ld\n",&count);
+    vector<xmlNodePtr> lvl_candy = vector<xmlNodePtr>(count);
+    fclose(fp);
+    //Get nodes of every level
+    xmlDocPtr doc;
+    xmlNodePtr cur;
+    xmlKeepBlanksDefault(0);
+    doc = xmlParseFile("/home/fhh/桌面/strings.2.xml");
+    if(doc == nullptr) {
+        fprintf(stderr, "doc error!\n");
+        return 0;
+    }
+
+    cur = xmlDocGetRootElement(doc);
+
+    if(cur == nullptr) {
+        fprintf(stderr, "root error!\n");
+        xmlFreeDoc(doc);
+        return 0;
+    }
+    cur = cur->children;
+    //匹配到第一条-----------------
+    printf("Now loading String data structure……\n");
+    while(strcmp(reinterpret_cast<char*>(xmlNodeGetContent(cur->children)),"STR_LEVEL_ZEN_E1"))
+        cur = cur->next;
+    //---------------------------
+    for(int i=0;i<10;i++)
+    {
+        lvl_zen_e.data()[i] = cur;
+        cur = cur->next;
+    }
+    for(int i=0;i<10;i++)
+    {
+        lvl_zen_e.data()[i] = cur;
+        cur = cur->next;
+    }
+    /*
     vector<char*> lvl_zen_e = vector<char*>();
     vector<char*> lvl_classic = vector<char*>();
     vector<char*> lvl_d = vector<char*>();
@@ -16,7 +75,7 @@ void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
     FILE *fp = nullptr;
     char name[32] = {0};
     int tmp,needReload;
-    char path[MAX_PATH_LENGTH]={0};/*
+    char path[MAX_PATH_LENGTH]={0};
     for(int i=0;i<=193;i++)
     {
         sprintf(path,filelocation,(i/16)+1,(i&12)/4+1,(i&3)+1);
@@ -114,5 +173,11 @@ void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
         }
         outswitch:;
     }*/
+    return 0;
+}
 
+int main(void)
+{
+    saveinfo();
+    return 0;
 }

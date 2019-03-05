@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <libxml/parser.h>
 #include "osspecificvars.h"
 using namespace std;
 class ExportAction

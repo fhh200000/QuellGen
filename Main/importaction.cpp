@@ -338,7 +338,7 @@ Count of lvl_z:%d\n\
 Count of lvl_g:%d\n\
 Count of lvl_m:%d\n\
 Count of lvl_b:%d\n\
-Count od lvl_candy:%d\n\
+Count of lvl_candy:%d\n\
 [End of file]",\
             static_cast<int>(lvl_zen_e.size()),\
             static_cast<int>(lvl_classic.size()),\
