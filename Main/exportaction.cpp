@@ -1,10 +1,7 @@
-#include <cstdio>
-#include <libxml/parser.h>
-#include <cstring>
-#include <vector>
+#include "exportaction.h"
 #define MAX_PATH_LENGTH 128
 using namespace std;
-int saveinfo()
+int saveinfo(void)
 {
     FILE *fp;
     unsigned long count;
@@ -26,7 +23,6 @@ int saveinfo()
     vector<xmlNodePtr> lvl_b = vector<xmlNodePtr>(count);
     fscanf(fp,"Count of lvl_candy:%ld\n",&count);
     vector<xmlNodePtr> lvl_candy = vector<xmlNodePtr>(count);
-    fclose(fp);
     //Get nodes of every level
     xmlDocPtr doc;
     xmlNodePtr cur;
@@ -50,16 +46,69 @@ int saveinfo()
     while(strcmp(reinterpret_cast<char*>(xmlNodeGetContent(cur->children)),"STR_LEVEL_ZEN_E1"))
         cur = cur->next;
     //---------------------------
-    for(int i=0;i<10;i++)
+    for(ulong i=0;i<lvl_zen_e.size();i++)
     {
         lvl_zen_e.data()[i] = cur;
+        printf("%s\n",xmlNodeGetContent(cur));
         cur = cur->next;
     }
-    for(int i=0;i<10;i++)
+    printf("SUBROUTINE----------------------\n");
+    for(ulong i=0;i<lvl_classic.size()-2;i++)
     {
-        lvl_zen_e.data()[i] = cur;
+        lvl_classic.data()[i] = cur;
+        printf("%s\n",xmlNodeGetContent(cur));
+        cur = cur->next;
+        if(i==5)
+        {
+            i++;
+            lvl_classic.data()[6]=nullptr;//Fixed a bug caused by FTG
+        }
+    }
+    printf("SUBROUTINE----------------------\n");
+    for(ulong i=0;i<lvl_d.size();i++)
+    {
+        lvl_d.data()[i] = cur;
+        printf("%s\n",xmlNodeGetContent(cur));
         cur = cur->next;
     }
+    printf("SUBROUTINE----------------------\n");
+    for(ulong i=0;i<lvl_z.size();i++)
+    {
+        lvl_z.data()[i] = cur;
+        printf("%s\n",xmlNodeGetContent(cur));
+        cur = cur->next;
+    }
+    printf("SUBROUTINE----------------------\n");
+    for(ulong i=0;i<lvl_g.size();i++)
+    {
+        lvl_g.data()[i] = cur;
+        printf("%s\n",xmlNodeGetContent(cur));
+        cur = cur->next;
+    }
+    printf("SUBROUTINE----------------------\n");
+    for(ulong i=0;i<lvl_m.size();i++)
+    {
+        lvl_m.data()[i] = cur;
+        printf("%s\n",xmlNodeGetContent(cur));
+        cur = cur->next;
+    }
+    printf("SUBROUTINE----------------------\n");
+    for(ulong i=0;i<lvl_b.size();i++)
+    {
+        lvl_b.data()[i] = cur;
+        printf("%s\n",xmlNodeGetContent(cur));
+        cur = cur->next;
+    }
+    printf("SUBROUTINE----------------------\n");
+    for(ulong i=0;i<lvl_candy.size();i++)
+    {
+        lvl_candy.data()[i] = cur;
+        printf("%s\n",xmlNodeGetContent(cur));
+        cur = cur->next;
+    }
+    printf("SUBROUTINE----------------------\n");
+    //This is our Magic Code!
+    int classindex[] = {21,12,11,2,22,0,27,29,37,13,15,32,28,16,38,3,25,33,39,26,36,9,19,20,23,14,8,7,30,10,34,1,31,18,17,35,24,6,4};
     /*
     vector<char*> lvl_zen_e = vector<char*>();
     vector<char*> lvl_classic = vector<char*>();
