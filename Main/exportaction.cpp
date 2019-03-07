@@ -9,7 +9,7 @@ int saveinfo(void)
     char path[MAX_PATH_LENGTH]={0};
     FILE *fp;
     unsigned long count;
-    fp = fopen("/home/fhh/桌面/tmp3/general.gmp","r");
+    fp = fopen("/home/fhh/桌面/tmp/general.gmp","r");
     fscanf(fp,"[QuellGen level general file]\n");
     fscanf(fp,"Count of lvl_zen_e:%ld\n",&count);
     vector<xmlNodePtr> lvl_zen_e = vector<xmlNodePtr>(count);
@@ -125,6 +125,8 @@ int saveinfo(void)
     //Now We are prepared to load split files.
     char name[32]={0};
     char id[32]={0};
+    int bestsol=0;
+    char* solution,*soludrop;
     xmlNodePtr now=nullptr;
     int tmp,needReload,posi,reloadindex=0;
     for(int i=0;i<192;i++)
@@ -218,7 +220,6 @@ int saveinfo(void)
             {
                 needReload=1;
             }
-
             outswitch:if(needReload)
             {
                 //printf("%s:%s\n",path,(char*)cur->name);
@@ -233,125 +234,25 @@ int saveinfo(void)
         }
         //-------------------------------
         fscanf(fp,"Level name:%[^\n]",name);
+        fscanf(fp,"\n");
         printf("%d.%d.%d:%s\n",(i/16)+1,(i&12)/4+1,(i&3)+1,name);
         xmlNodeSetContent(now->children->next->next,reinterpret_cast<unsigned char*>(name));
+        fscanf(fp,"Best solution:%d\n",&bestsol);
+        solution = new char[bestsol*2+2];
+        soludrop = new char[bestsol*2+2];
+        fscanf(fp,"Solution:%[^\n]",solution);
         fscanf(fp,"\n");
+        fscanf(fp,"Soludrop:%[^\n]",soludrop);
+        xmlSetProp(curlvl->children,reinterpret_cast<const unsigned char*>("array_chars"),reinterpret_cast<unsigned char*>(solution));
+        xmlSetProp(curlvl->children->next,reinterpret_cast<const unsigned char*>("array_chars"),reinterpret_cast<unsigned char*>(soludrop));
+        delete(soludrop);
+        delete(solution);
+        curlvl = curlvl->next;
         fclose(fp);
     }
     xmlSaveFormatFile("/home/fhh/桌面/strings.3.xml",doc,1);
+    xmlSaveFormatFile("/home/fhh/桌面/levels_zen.2.txt",doclvl,1);
     xmlFreeDoc(doc);
-    /*
-    vector<char*> lvl_zen_e = vector<char*>();
-    vector<char*> lvl_classic = vector<char*>();
-    vector<char*> lvl_d = vector<char*>();
-    vector<char*> lvl_z = vector<char*>();
-    vector<char*> lvl_g = vector<char*>();
-    vector<char*> lvl_m = vector<char*>();
-    vector<char*> lvl_b = vector<char*>();
-    vector<char*> lvl_candy = vector<char*>();
-    vector<char*>* id;
-    int posi=0;
-    int classindex[] = {21,12,11,2,22,0,27,29,37,13,15,32,28,16,38,3,25,33,39,26,36,9,19,20,23,14,8,7,30,10,34,1,31,18,17,35,24,6,51,4,52,52};
-    FILE *fp = nullptr;
-    char name[32] = {0};
-    int tmp,needReload;
-    for(int i=0;i<=193;i++)
-    {
-        sprintf(path,filelocation,(i/16)+1,(i&12)/4+1,(i&3)+1);
-        //printf("%s\n",path);
-        //printf("%d\n",i);
-        if((static_cast<void>(fp = fopen(path,"r+")),fp)==nullptr)
-            return;
-        fscanf(fp,"[QuellGen level data file]\n");
-        fscanf(fp,"Level ID:%s\n",name);
-        //判断关卡类型
-        switch(name[4])
-        {
-            case 'd':
-            {
-                tmp = atoi((reinterpret_cast<const char*>(name))+5);
-                if(!tmp)
-                {
-                    needReload=1;
-                    goto outswitch;
-                }
-                sscanf(reinterpret_cast<const char*>(name),"lvl_d%d\n",&posi);
-                name = lvl_d.data()[posi-1];
-                break;
-            }
-            case 'z':
-            {
-                tmp = atoi((reinterpret_cast<const char*>(name))+5);
-                if(!tmp)
-                {
-                    needReload=1;
-                    goto outswitch;
-                }
-                sscanf(reinterpret_cast<const char*>(name),"lvl_z%d\n",&posi);
-                name = lvl_z.data()[posi-1];
-                break;
-            }
-            case 'g':
-            {
-                tmp = atoi((reinterpret_cast<const char*>(name))+5);
-                if(!tmp)
-                {
-                    needReload=1;
-                    goto outswitch;
-                }
-                sscanf(reinterpret_cast<const char*>(name),"lvl_g%d\n",&posi);
-                name = lvl_d.data()[posi-1];
-                break;
-            }
-            case 'c':
-            {
-                tmp = (name[9]=='_');//select "candy"
-                    if(!tmp)
-                    {
-                        needReload=1;
-                        goto outswitch;
-                    }
-                sscanf(reinterpret_cast<const char*>(name),"lvl_candy_%d\n",&posi);
-                name = lvl_candy.data()[posi-1];
-                break;
-            }
-            case 'b':
-            {
-                tmp = atoi((reinterpret_cast<const char*>(name))+5);
-                if(!tmp)
-                {
-                    needReload=1;
-                    goto outswitch;
-                }
-                sscanf(reinterpret_cast<const char*>(name),"lvl_b%d\n",&posi);
-                name = lvl_b.data()[posi-1];
-                break;
-            }
-            case 'm':
-            {
-                tmp = atoi((reinterpret_cast<const char*>(name))+5);
-                if(!tmp)
-                {
-                    needReload=1;
-                    goto outswitch;
-                }
-                sscanf(reinterpret_cast<const char*>(name),"lvl_m%d\n",&posi);
-                name = lvl_m.data()[posi-1];
-                break;
-            }
-            case 'q':
-            {
-                sscanf(reinterpret_cast<const char*>(name),"lvl_qm_e%d\n",&posi);
-                name = lvl_zen_e.data()[posi-1];
-                break;
-            }
-            default:
-            {
-                needReload=1;
-            }
-        }
-        outswitch:;
-    }*/
     return 0;
 }
 
