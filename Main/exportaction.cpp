@@ -1,3 +1,4 @@
+#include <QCoreApplication>
 #include <cstdio>
 #include <libxml/parser.h>
 #include <cstring>
@@ -31,7 +32,7 @@ int saveinfo(void)
     xmlDocPtr doc;
     xmlNodePtr cur;
     xmlKeepBlanksDefault(0);
-    doc = xmlParseFile("/home/fhh/桌面/strings.2.xml");
+    doc = xmlParseFile("/home/fhh/桌面/strings.xml");
     if(doc == nullptr) {
         fprintf(stderr, "doc error!\n");
         return 0;
@@ -127,10 +128,12 @@ int saveinfo(void)
     char id[32]={0};
     int bestsol=0;
     char* solution,*soludrop;
+    int width=0,height=0,lspace=0,rspace=0,layercount;
     xmlNodePtr now=nullptr;
     int tmp,needReload,posi,reloadindex=0;
     for(int i=0;i<192;i++)
     {
+        QString lvldata;
         sprintf(path,"/home/fhh/桌面/tmp/%d.%d.%d.gmp",(i/16)+1,(i&12)/4+1,(i&3)+1);
         fp = fopen(path,"r");
         fscanf(fp,"[QuellGen level data file]\n");
@@ -243,6 +246,63 @@ int saveinfo(void)
         fscanf(fp,"Solution:%[^\n]",solution);
         fscanf(fp,"\n");
         fscanf(fp,"Soludrop:%[^\n]",soludrop);
+        fscanf(fp,"\n");
+        fscanf(fp,"Width:%d\nHeight:%d\nLeft space:%d\nRight space:%d\n",&width,&height,&lspace,&rspace);
+        //Getting levels
+        fscanf(fp,"Layers:%d\n",&layercount);
+        //Layer 0---------------------------
+        char *lvlcurrow = new char[width*4];
+        fscanf(fp,"Layer 0:\n");
+        for(int l=0;l<height;l++)
+        {
+            //Add extra "1" to the front;
+            for(int i=0;i<lspace;i++)
+                lvldata.append("1 ");
+            fscanf(fp,"%[^\n]",lvlcurrow);
+            lvldata.append(lvlcurrow);
+            fscanf(fp,"\n");
+            for(int i=0;i<rspace;i++)
+                //Add extra "1" to the back;
+                lvldata.append("1 ");
+        }
+        //Layer 1---------------------------
+        fscanf(fp,"Layer 1:\n");
+        for(int l=0;l<height;l++)
+        {
+            //Add extra "0" to the front;
+            for(int i=0;i<lspace;i++)
+                lvldata.append("0 ");
+            fscanf(fp,"%[^\n]",lvlcurrow);
+            lvldata.append(lvlcurrow);
+            fscanf(fp,"\n");
+            for(int i=0;i<rspace;i++)
+                //Add extra "0" to the back;
+                lvldata.append("0 ");
+        }
+        //Layer 2(Optional)-----------------
+        if(layercount-2)
+        {
+            fscanf(fp,"Layer 2:\n");
+            for(int l=0;l<height;l++)
+            {
+                //Add extra "0" to the front;
+                for(int i=0;i<lspace;i++)
+                    lvldata.append("0 ");
+                fscanf(fp,"%[^\n]",lvlcurrow);
+                lvldata.append(lvlcurrow);
+                fscanf(fp,"\n");
+                for(int i=0;i<rspace;i++)
+                    //Add extra "0" to the back;
+                    lvldata.append("0 ");
+            }
+        }
+        //------------------------------------
+        xmlSetProp(curlvl,reinterpret_cast<const unsigned char*>("layout"),reinterpret_cast<unsigned char*>(lvldata.toLocal8Bit().data()));
+        free(lvlcurrow);
+        char layercounts[2];
+        sprintf(layercounts,"%d",layercount);
+        xmlSetProp(curlvl->children,reinterpret_cast<const unsigned char*>("layers"),reinterpret_cast<unsigned char*>(layercounts));
+        //--------------
         xmlSetProp(curlvl->children,reinterpret_cast<const unsigned char*>("array_chars"),reinterpret_cast<unsigned char*>(solution));
         xmlSetProp(curlvl->children->next,reinterpret_cast<const unsigned char*>("array_chars"),reinterpret_cast<unsigned char*>(soludrop));
         delete(soludrop);

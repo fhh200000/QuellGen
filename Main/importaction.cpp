@@ -267,6 +267,7 @@ static int parseDoc(const char* docname,const char* strname,char* filelocation)
         fprintf(fp,"Height:%d\n",height);
         fprintf(fp,"Left space:%d\n",lspace);
         fprintf(fp,"Right space:%d\n",rspace);
+        fprintf(fp,"Layers:%c\n",layers[0]);
         //-----------------------------
         fprintf(fp,"Layer 0:\n");
         pos=attr_value;

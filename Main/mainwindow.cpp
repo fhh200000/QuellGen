@@ -31,6 +31,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    if(!name)
+        delete name;
+    if(!layer0)
+    {
+        delete layer0;
+        delete layer1;
+        delete layer2;
+    }
 }
 
 
@@ -41,12 +49,12 @@ void MainWindow::showinfo()
 }
 void MainWindow::aboutGame()
 {
-    AboutGame *ab = new AboutGame();
+    AboutGame *ab = new AboutGame(this);
     ab->show();
 }
 void MainWindow::aboutAuthor()
 {
-    AboutAuthor *ab = new AboutAuthor();
+    AboutAuthor *ab = new AboutAuthor(this);
     ab->show();
 }
 void MainWindow::on_pushButton_2_clicked()
@@ -125,7 +133,8 @@ void MainWindow::open_selected()
      fscanf(fp,"Height:%d\n",&h);
      fscanf(fp,"Left space:%d\n",&lspace);
      fscanf(fp,"Right space:%d\n",&rspace);
-     if(!layer0)
+     fscanf(fp,"Layers:%d\n",&(MainWindow::layers));
+     if(layer0)
      {
         //释放上一次的内存
          delete[](layer0);
@@ -215,6 +224,7 @@ void MainWindow::save_selected()
     fprintf(fp,"Height:%d\n",h);
     fprintf(fp,"Left space:%d\n",lspace);
     fprintf(fp,"Right space:%d\n",rspace);
+    fprintf(fp,"Layers:%d\n",MainWindow::layers);
     fprintf(fp,"Layer 0:\n");
     int k=0;
     for(unsigned int i=0;i<h;i++)

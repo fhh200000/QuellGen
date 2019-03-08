@@ -42,6 +42,7 @@ public:
     int* layer1=nullptr;
     int* layer2=nullptr;
     int steps = 0;
+    int layers;
     unsigned int w,h;
     int lspace,rspace;
     char* name = nullptr;
