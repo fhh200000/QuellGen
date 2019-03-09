@@ -1,16 +1,15 @@
-#include <QCoreApplication>
-#include <cstdio>
-#include <libxml/parser.h>
-#include <cstring>
-#include <vector>
+#include "exportaction.h"
+#include <QString>
 #define MAX_PATH_LENGTH 128
 using namespace std;
-int saveinfo(void)
+void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
 {
+    QString datadir=QString(filelocation);
+    datadir.append("/general.gmp");
     char path[MAX_PATH_LENGTH]={0};
     FILE *fp;
     unsigned long count;
-    fp = fopen("/home/fhh/桌面/tmp/general.gmp","r");
+    fp = fopen(datadir.toLocal8Bit().data(),"r");
     fscanf(fp,"[QuellGen level general file]\n");
     fscanf(fp,"Count of lvl_zen_e:%ld\n",&count);
     vector<xmlNodePtr> lvl_zen_e = vector<xmlNodePtr>(count);
@@ -32,10 +31,10 @@ int saveinfo(void)
     xmlDocPtr doc;
     xmlNodePtr cur;
     xmlKeepBlanksDefault(0);
-    doc = xmlParseFile("/home/fhh/桌面/strings.xml");
+    doc = xmlParseFile(strname);
     if(doc == nullptr) {
         fprintf(stderr, "doc error!\n");
-        return 0;
+        return;
     }
 
     cur = xmlDocGetRootElement(doc);
@@ -43,7 +42,7 @@ int saveinfo(void)
     if(cur == nullptr) {
         fprintf(stderr, "root error!\n");
         xmlFreeDoc(doc);
-        return 0;
+        return;
     }
     cur = cur->children;
     //匹配到第一条-----------------
@@ -102,19 +101,19 @@ int saveinfo(void)
     xmlDocPtr doclvl;
     xmlNodePtr curlvl;
     xmlKeepBlanksDefault(0);
-    doclvl = xmlParseFile("/home/fhh/桌面/levels_zen.txt");
+    doclvl = xmlParseFile(docname);
     curlvl = xmlDocGetRootElement(doclvl);
     printf("Now loading level file......\n");
     if(curlvl == nullptr)
     {
         fprintf(stderr, "root error!\n");
         xmlFreeDoc(doc);
-        return 0;
+        return;
     }
     if(xmlStrcmp(curlvl->name, reinterpret_cast<const xmlChar*>("serialise")))
     {
         printf("end\n");
-        return 0;
+        return;
     }
     curlvl = curlvl->children;
     //After that, we switch to the first level
@@ -131,10 +130,12 @@ int saveinfo(void)
     int width=0,height=0,lspace=0,rspace=0,layercount;
     xmlNodePtr now=nullptr;
     int tmp,needReload,posi,reloadindex=0;
+    datadir=QString(filelocation);
+    datadir.append("/%d.%d.%d.gmp");
     for(int i=0;i<192;i++)
     {
         QString lvldata;
-        sprintf(path,"/home/fhh/桌面/tmp/%d.%d.%d.gmp",(i/16)+1,(i&12)/4+1,(i&3)+1);
+        sprintf(path,datadir.toLocal8Bit().data(),(i/16)+1,(i&12)/4+1,(i&3)+1);
         fp = fopen(path,"r");
         fscanf(fp,"[QuellGen level data file]\n");
         fscanf(fp,"Level ID:%s\n",id);
@@ -225,8 +226,6 @@ int saveinfo(void)
             }
             outswitch:if(needReload)
             {
-                //printf("%s:%s\n",path,(char*)cur->name);
-                //name = (char*)cur->name;
                 if(id[4]=='c'&&id[5]=='r')
                 {
                     now = lvl_zen_e[0];
@@ -241,8 +240,8 @@ int saveinfo(void)
         printf("%d.%d.%d:%s\n",(i/16)+1,(i&12)/4+1,(i&3)+1,name);
         xmlNodeSetContent(now->children->next->next,reinterpret_cast<unsigned char*>(name));
         fscanf(fp,"Best solution:%d\n",&bestsol);
-        solution = new char[bestsol*2+2];
-        soludrop = new char[bestsol*2+2];
+        solution = new char[static_cast<ulong>(bestsol*2+2)];
+        soludrop = new char[static_cast<ulong>(bestsol*2+2)];
         fscanf(fp,"Solution:%[^\n]",solution);
         fscanf(fp,"\n");
         fscanf(fp,"Soludrop:%[^\n]",soludrop);
@@ -251,7 +250,7 @@ int saveinfo(void)
         //Getting levels
         fscanf(fp,"Layers:%d\n",&layercount);
         //Layer 0---------------------------
-        char *lvlcurrow = new char[width*4];
+        char *lvlcurrow = new char[static_cast<ulong>(width*4)];
         fscanf(fp,"Layer 0:\n");
         for(int l=0;l<height;l++)
         {
@@ -301,10 +300,15 @@ int saveinfo(void)
         free(lvlcurrow);
         char layercounts[2];
         sprintf(layercounts,"%d",layercount);
-        xmlSetProp(curlvl->children,reinterpret_cast<const unsigned char*>("layers"),reinterpret_cast<unsigned char*>(layercounts));
-        //--------------
+        xmlSetProp(curlvl,reinterpret_cast<const unsigned char*>("layers"),reinterpret_cast<unsigned char*>(layercounts));
+        //-------------------------------------
+        char stepcount[3];
+        sprintf(stepcount,"%d",bestsol);
+        xmlSetProp(curlvl,reinterpret_cast<const unsigned char*>("numMoves"),reinterpret_cast<unsigned char*>(stepcount));
         xmlSetProp(curlvl->children,reinterpret_cast<const unsigned char*>("array_chars"),reinterpret_cast<unsigned char*>(solution));
+        xmlSetProp(curlvl->children,reinterpret_cast<const unsigned char*>("array_size"),reinterpret_cast<unsigned char*>(stepcount));
         xmlSetProp(curlvl->children->next,reinterpret_cast<const unsigned char*>("array_chars"),reinterpret_cast<unsigned char*>(soludrop));
+        xmlSetProp(curlvl->children->next,reinterpret_cast<const unsigned char*>("array_size"),reinterpret_cast<unsigned char*>(stepcount));
         delete(soludrop);
         delete(solution);
         curlvl = curlvl->next;
@@ -313,11 +317,5 @@ int saveinfo(void)
     xmlSaveFormatFile("/home/fhh/桌面/strings.3.xml",doc,1);
     xmlSaveFormatFile("/home/fhh/桌面/levels_zen.2.txt",doclvl,1);
     xmlFreeDoc(doc);
-    return 0;
-}
-
-int main(void)
-{
-    saveinfo();
-    return 0;
+    return;
 }

@@ -319,13 +319,10 @@ void MainWindow::exportxml()
     QString levelname,stringname,indir;
 //level data------------------------------------------------
     QFileDialog *fileDialog = new QFileDialog(this);
-    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
-    fileDialog->setWindowTitle(tr("保存关卡数据文件"));
+    fileDialog->setWindowTitle(tr("打开源关卡数据文件"));
     fileDialog->setDirectory(QCoreApplication::applicationDirPath());
     fileDialog->setNameFilter(tr("Quell关卡数据文件(*.txt)"));
-    fileDialog->setFileMode(QFileDialog::ExistingFile);
     fileDialog->setViewMode(QFileDialog::Detail);
-    fileDialog->setDefaultSuffix(".txt");
     if(fileDialog->exec())
     {
          levelname = fileDialog->selectedFiles().first();
@@ -335,13 +332,10 @@ void MainWindow::exportxml()
     //----------------------------------------------------------
     //string data------------------------------------------------
     fileDialog = new QFileDialog(this);
-    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
-    fileDialog->setWindowTitle(tr("保存关卡字符串文件"));
+    fileDialog->setWindowTitle(tr("打开源关卡字符串文件"));
     fileDialog->setDirectory(QCoreApplication::applicationDirPath());
     fileDialog->setNameFilter(tr("Quell关卡字符串文件(*.xml)"));
-    fileDialog->setFileMode(QFileDialog::ExistingFile);
     fileDialog->setViewMode(QFileDialog::Detail);
-    fileDialog->setDefaultSuffix(".xml");
     if(fileDialog->exec())
     {
          stringname = fileDialog->selectedFiles().first();
@@ -361,7 +355,6 @@ void MainWindow::exportxml()
     }
     delete(fileDialog);
     if(indir=="")return;
-    indir.append("/%d.%d.%d.gmp");
     //----------------------------------------------------------
     ExportAction::saveinfo(const_cast<char*>(levelname.toStdString().data()),\
                            const_cast<char*>(stringname.toStdString().data()),\
