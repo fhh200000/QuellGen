@@ -50,5 +50,6 @@ public:
     int *solution,*soludrop;
     std::vector<step> *steplist;
     int lvlindex;
+    void setStatus(QString in);
 };
 #endif // MAINWINDOW_H

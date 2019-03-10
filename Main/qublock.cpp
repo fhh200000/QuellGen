@@ -21,7 +21,6 @@ QuBlock::QuBlock(QWidget *parent) :
 QuBlock::~QuBlock()
 {
     delete ui;
-    printf("block (%d,%d) removed.\n",x,y);
 }
 
 void QuBlock::initAtlas(QPixmap& a, QPixmap& b, QPixmap& c,int xin,int yin)
@@ -41,6 +40,5 @@ void QuBlock::reloadAtlas(QPixmap& a)
 }
 void QuBlock::clicked()
 {
-    printf("block (%d,%d) clicked.\n",x,y);
     MainWindow::self->loadinfo(x,y);
 }

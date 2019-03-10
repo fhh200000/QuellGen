@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->statusBar->showMessage("就绪",-1);
+    setStatus("就绪");
     this->ui->pushButton->hide();
     connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(open_selected()));
     connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(save_selected()));
@@ -61,7 +61,7 @@ void MainWindow::on_pushButton_2_clicked()
 {
     pop->removeMap();
     ui->detailed->setDisabled(true);
-    ui->statusBar->showMessage("已清除数据");
+    MainWindow::setStatus("已清除数据");
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -100,7 +100,6 @@ void MainWindow::open_selected()
      qDebug()<<fileName<<endl;
      if(fileName=="")return;
      sscanf(QFileInfo(fileName).fileName().toStdString().data(),"%d",&(MainWindow::lvlindex));
-     printf("%d\n",MainWindow::lvlindex);
      delete (fileDialog);
      //为人类阅读而优化2333
      FILE *fp;
@@ -140,7 +139,6 @@ void MainWindow::open_selected()
          delete[](layer0);
          delete[](layer1);
          delete[](layer2);
-         printf("Previous data released.\n");
      }
      layer0 = new int[w*h];
      layer1 = new int[w*h];
@@ -261,7 +259,7 @@ void MainWindow::save_selected()
 void MainWindow::loadinfo(int x,int y)
 {
     QString data = QString("选中方块(%1,%2)").arg(x).arg(y);
-    ui->statusBar->showMessage(data,-1);
+    MainWindow::setStatus(data);
     ui->detailed->setEnabled(true);
     ui->l1->setCurrentIndex(layer0[x+y*static_cast<int>(w)]);
 }
@@ -359,4 +357,8 @@ void MainWindow::exportxml()
     ExportAction::saveinfo(const_cast<char*>(levelname.toStdString().data()),\
                            const_cast<char*>(stringname.toStdString().data()),\
                            const_cast<char*>(indir.toStdString().data()));
+}
+void MainWindow::setStatus(QString in)
+{
+    ui->statusBar->showMessage(in,-1);
 }

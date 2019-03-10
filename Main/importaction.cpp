@@ -72,7 +72,7 @@ static int parseDoc(const char* docname,const char* strname,char* filelocation)
             }
             default:
             {
-                printf("Failed!\n%c\n",(xmlNodeGetContent(cur->children)[10]));return 0;
+                id=&lvl_classic;
             }
         }
             id->push_back(reinterpret_cast<char*>(xmlNodeGetContent(cur->children->next->next)));
@@ -351,6 +351,7 @@ Count of lvl_candy:%d\n\
             static_cast<int>(lvl_candy.size())\
             );
     fclose(fp);
+    MainWindow::self->setStatus("完成导入");
     return 0;
 }
 

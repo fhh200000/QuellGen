@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <libxml/parser.h>
 #include "osspecificvars.h"
+#include "mainwindow.h"
 using namespace std;
 class ExportAction
 {

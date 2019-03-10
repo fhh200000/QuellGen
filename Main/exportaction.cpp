@@ -315,8 +315,14 @@ void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
         curlvl = curlvl->next;
         fclose(fp);
     }
-    xmlSaveFormatFile("/home/fhh/桌面/strings.3.xml",doc,1);
-    xmlSaveFormatFile("/home/fhh/桌面/levels_zen.2.txt",doclvl,1);
+    free(lvlcurrow);
+    QString strout=QString(strname);
+    strout.append(".mod.xml");
+    QString dtaout=QString(docname);
+    dtaout.append(".mod.txt");
+    xmlSaveFormatFile(strout.toLocal8Bit().data(),doc,1);
+    xmlSaveFormatFile(dtaout.toLocal8Bit().data(),doclvl,1);
     xmlFreeDoc(doc);
+    MainWindow::self->setStatus("完成导出");
     return;
 }

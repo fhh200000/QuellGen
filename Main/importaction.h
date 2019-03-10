@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdlib>
 #include "osspecificvars.h"
+#include "mainwindow.h"
 using namespace std;
 class ImportAction
 {
