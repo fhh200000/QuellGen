@@ -123,6 +123,7 @@ void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
     }
     //Then Everything is OK
     //Now We are prepared to load split files.
+    char *lvlcurrow = nullptr;
     char name[32]={0};
     char id[32]={0};
     int bestsol=0;
@@ -132,6 +133,7 @@ void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
     int tmp,needReload,posi,reloadindex=0;
     datadir=QString(filelocation);
     datadir.append("/%d.%d.%d.gmp");
+    lvlcurrow = static_cast<char*>(malloc(84* sizeof (char)));
     for(int i=0;i<192;i++)
     {
         QString lvldata;
@@ -250,7 +252,7 @@ void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
         //Getting levels
         fscanf(fp,"Layers:%d\n",&layercount);
         //Layer 0---------------------------
-        char *lvlcurrow = new char[static_cast<ulong>(width*4)];
+        //lvlcurrow = new char[static_cast<ulong>(width*4)];
         fscanf(fp,"Layer 0:\n");
         for(int l=0;l<height;l++)
         {
@@ -297,7 +299,6 @@ void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
         }
         //------------------------------------
         xmlSetProp(curlvl,reinterpret_cast<const unsigned char*>("layout"),reinterpret_cast<unsigned char*>(lvldata.toLocal8Bit().data()));
-        free(lvlcurrow);
         char layercounts[2];
         sprintf(layercounts,"%d",layercount);
         xmlSetProp(curlvl,reinterpret_cast<const unsigned char*>("layers"),reinterpret_cast<unsigned char*>(layercounts));
