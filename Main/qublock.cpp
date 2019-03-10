@@ -12,7 +12,8 @@ QuBlock::QuBlock(QWidget *parent) :
     ui->third->setScaledContents(true);
     connect(ui->click,SIGNAL(clicked()),this,SLOT(clicked()));
     ui->first->resize(BLOCKSIZE,BLOCKSIZE);
-    ui->second->resize(BLOCKSIZE,BLOCKSIZE);
+    ui->second->resize(static_cast<int>(BLOCKSIZE*0.8),static_cast<int>(BLOCKSIZE*0.8));
+    ui->second->move(static_cast<int>(BLOCKSIZE*0.1+1),static_cast<int>(BLOCKSIZE*0.1+1));
     ui->third->resize(BLOCKSIZE,BLOCKSIZE);
     ui->click->resize(BLOCKSIZE,BLOCKSIZE);
     this->resize(BLOCKSIZE,BLOCKSIZE);

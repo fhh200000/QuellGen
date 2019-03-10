@@ -91,6 +91,30 @@ void ItWorksPop::reloadBlock(extrablock in, int width)
             que[in.count]->reloadAtlas(rock[8]);
             break;
         }
+        case 184:
+        {
+            que[in.count]->reloadAtlas(rock[1]);
+            que[in.count+width]->reloadAtlas(rock[9]);
+            break;
+        }
+        case 185:
+        {
+            que[in.count]->reloadAtlas(rock[16]);
+            que[in.count+width]->reloadAtlas(rock[24]);
+            break;
+        }
+        case 186:
+        {
+            que[in.count]->reloadAtlas(rock[41]);
+            que[in.count+1]->reloadAtlas(rock[42]);
+            break;
+        }
+        case 187:
+        {
+            que[in.count]->reloadAtlas(rock[43]);
+            que[in.count+1]->reloadAtlas(rock[44]);
+            break;
+        }
         case 188:
         {
             que[in.count]->reloadAtlas(rock[5]);
@@ -106,23 +130,42 @@ void ItWorksPop::reloadBlock(extrablock in, int width)
             que[in.count+width*2]->reloadAtlas(rock[23]);
             break;
         }
-        case 187:
+        case 190:
         {
-            que[in.count]->reloadAtlas(rock[43]);
-            que[in.count+1]->reloadAtlas(rock[44]);
+            que[in.count]->reloadAtlas(rock[10]);
+            que[in.count+1]->reloadAtlas(rock[11]);
+            que[in.count+2]->reloadAtlas(rock[12]);
             break;
         }
-        case 185:
+        case 191:
         {
-            que[in.count]->reloadAtlas(rock[16]);
-            que[in.count+width]->reloadAtlas(rock[24]);
+            for(int i=0;i<6;i++)
+            {
+
+                que[in.count+i]->reloadAtlas(rock[17+i]);
+            }
             break;
+
         }
         case 192:
         {
             que[in.count]->reloadAtlas(rock[25]);
             que[in.count+width]->reloadAtlas(rock[33]);
             que[in.count+width+1]->reloadAtlas(rock[34]);
+            break;
+        }
+        case 194:
+        {
+            que[in.count]->reloadAtlas(rock[27]);
+            que[in.count+1]->reloadAtlas(rock[28]);
+            que[in.count+width+1]->reloadAtlas(rock[36]);
+            break;
+        }
+        case 195:
+        {
+            que[in.count]->reloadAtlas(rock[32]);
+            que[in.count+width-1]->reloadAtlas(rock[39]);
+            que[in.count+width]->reloadAtlas(rock[40]);
             break;
         }
     }

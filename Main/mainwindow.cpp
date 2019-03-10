@@ -16,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setStatus("就绪");
-    this->ui->pushButton->hide();
+    ui->pushButton_2->hide();
+    ui->pushButton->hide();
     connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(open_selected()));
     connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(save_selected()));
     connect(ui->actionGame,SIGNAL(triggered()),this,SLOT(aboutGame()));
@@ -174,6 +175,7 @@ void MainWindow::open_selected()
          fscanf(fp,"\n");
      }
      fclose(fp);
+     ui->pushButton_4->setEnabled(true);
      refresh(w,h);
 }
 void MainWindow::save_selected()
