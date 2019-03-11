@@ -89,7 +89,8 @@ void MainWindow::open_selected()
 {
      QFileDialog *fileDialog = new QFileDialog(this);
      fileDialog->setWindowTitle(tr("打开关卡"));
-     fileDialog->setDirectory(QCoreApplication::applicationDirPath());
+     //fileDialog->setDirectory(QCoreApplication::applicationDirPath());
+     fileDialog->setDirectory("/home/fhh/桌面/tmp");
      fileDialog->setNameFilter(tr("Quell关卡文件(*.gmp)"));
      fileDialog->setFileMode(QFileDialog::ExistingFile);
      fileDialog->setViewMode(QFileDialog::Detail);

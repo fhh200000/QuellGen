@@ -154,6 +154,13 @@ void ItWorksPop::reloadBlock(extrablock in, int width)
             que[in.count+width+1]->reloadAtlas(rock[34]);
             break;
         }
+        case 193:
+        {
+            que[in.count]->reloadAtlas(rock[29]);
+            que[in.count+1]->reloadAtlas(rock[30]);
+            que[in.count+width]->reloadAtlas(rock[37]);
+            break;
+        }
         case 194:
         {
             que[in.count]->reloadAtlas(rock[27]);

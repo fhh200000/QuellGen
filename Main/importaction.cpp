@@ -258,7 +258,8 @@ static int parseDoc(const char* docname,const char* strname,char* filelocation)
             //for(int j=0;j<width-lcurrent-1;j++)
              //   strtod(tmpchr2, &tmpchr2);
              while(datacount++<width)
-                static_cast<int>(strtod(tmpchr2, &tmpchr2))==1?rcurrent++:rcurrent;
+                 //fixed bug that make inconsistant levels(e.g. 1.3.2) to fail
+                static_cast<int>(strtod(tmpchr2, &tmpchr2))==1?rcurrent++:rcurrent=0;
             lspace = lspace>lcurrent?lcurrent:lspace;
             rspace = rspace>rcurrent?rcurrent:rspace;
             out2:;
