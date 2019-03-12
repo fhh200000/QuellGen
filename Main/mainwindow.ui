@@ -62,161 +62,6 @@
     <property name="title">
      <string>数据设置</string>
     </property>
-    <widget class="QComboBox" name="l1">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>40</y>
-       <width>141</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <item>
-      <property name="text">
-       <string>0-N/A</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>1-地图布局边界</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>2-左上边框，小</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>3-右上边框，小</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>4-左下边框，小</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>5-右下边框，小</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>6-右下边框</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>7-左下边框</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>8-右上边框</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>9-左上边框</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>10-上边框</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>11-左边框</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>12-下边框</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>13-右边框</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>14-淡色砖，小孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>15-淡色砖，中孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>16-淡色砖，大孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>17-深色砖，小孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>18-深色砖，中孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>19-深色砖，大孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>20-粉红色砖，小孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>21-粉红色砖，中孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>22-粉红色砖，大孔</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>23-珍珠</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>24-</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>25-尖刺，向上</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>26-尖刺，向下</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>27-尖刺，向左</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>28-尖刺，向右</string>
-      </property>
-     </item>
-    </widget>
     <widget class="QComboBox" name="l2">
      <property name="geometry">
       <rect>
@@ -287,6 +132,16 @@
      </property>
      <property name="text">
       <string>备用层：</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="l1">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>40</y>
+       <width>141</width>
+       <height>25</height>
+      </rect>
      </property>
     </widget>
    </widget>

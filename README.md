@@ -2,8 +2,8 @@ A Qt-C++ tool that helps Quell gamers modify level configurations.
 一个为Quell玩家设计的关卡编辑工具(基于Qt/C++).  
 The main purpose of this tool is to learn C++/Qt effectively.  
 该工具的主要目的是为了作者能够有效地学习C++/Qt.  
-Note:This tool **IS NOT COMPLETED**(50% so far),so please be patient.  
-注意：这个工具**没有开发完成**(目前大约50%)，所以请保持耐心。  
+Note:This tool **IS NOT COMPLETED**(80% so far),so please be patient.  
+注意：这个工具**没有开发完成**(目前大约80%)，所以请保持耐心。  
 I am not a pigeon so I promise it will continue.#(hilarious)  
 我不是鸽子，所以我不咕咕。#(滑稽)  
   
@@ -61,3 +61,5 @@ Test it on Windows and fixed minor configurations.............Done
 ---->完成“导出”功能.............................................完成  
 Testing block atlas manually..................................Done  
 手动测试方块贴图................................................完成  
+Add block name strings........................................Done  
+添加方块名称字符串...............................................完成  
