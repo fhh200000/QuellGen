@@ -38,7 +38,7 @@ void ItWorksPop::initMap(int w,int h,int layer0[],int layer1[],int layer2[])
             que[tmp]->show();
             if(layer0[tmp]>175)
             {
-                extrablock a={i*w+j,w,layer0[tmp]};
+                extrablock a={i*w+j,layer0[tmp]};
                 spec.push_back(a);
             }
         }
@@ -175,5 +175,98 @@ void ItWorksPop::reloadBlock(extrablock in, int width)
             que[in.count+width]->reloadAtlas(rock[40]);
             break;
         }
+    }
+}
+void changeData(int data);
+void ItWorksPop::changeBlock(int a, int b, int c)
+{
+    QPixmap* atlasp = QuellBlock::atlasp;
+    que[MainWindow::self->pos]->changeAtlas(atlasp[a],atlasp[b],atlasp[c]);
+    if(a>175)
+    {
+        reloadBlock({MainWindow::self->pos,a},static_cast<int>(MainWindow::self->w));
+    }
+    if(a>180)
+        {
+            changeData(a);
+        }
+}
+void changeData(int data)
+{
+    switch(data)
+    {
+    case 184:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)]=175;
+        break;
+    }
+    case 185:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)]=175;
+        break;
+    }
+    case 186:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+1]=175;
+        break;
+    }
+    case 187:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+1]=175;
+        break;
+    }
+    case 188:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos]=data;
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)]=175;
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)+1]=175;
+        break;
+    }
+    case 189:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)]=175;
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)*2]=175;
+        break;
+    }
+    case 190:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+1]=175;
+        MainWindow::self->layer0[MainWindow::self->pos+2]=175;
+        break;
+    }
+    case 191:
+    {
+        for(int i=1;i<6;i++)
+        {
+
+            MainWindow::self->layer0[MainWindow::self->pos+i]=175;
+        }
+        break;
+
+    }
+    case 192:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)]=175;
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)+1]=175;
+        break;
+    }
+    case 193:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+1]=175;
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)]=175;
+        break;
+    }
+    case 194:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+1]=175;
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)+1]=175;
+        break;
+    }
+    case 195:
+    {
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)-1]=175;
+        MainWindow::self->layer0[MainWindow::self->pos+static_cast<int>(MainWindow::self->w)]=175;
+        break;
+    }
     }
 }

@@ -34,6 +34,7 @@ private slots:
     void showinfo();
     void import();
     void exportxml();
+    void changeData();
 public:
     InfoEditor *info=nullptr;
     Ui::MainWindow *ui;
@@ -42,14 +43,17 @@ public:
     int* layer1=nullptr;
     int* layer2=nullptr;
     int steps = 0;
+    int pos;
     int layers;
     unsigned int w,h;
     int lspace,rspace;
     char* name = nullptr;
+    char id[20];
     void loadinfo(int x,int y);
     int *solution,*soludrop;
     std::vector<step> *steplist;
     int lvlindex;
     void setStatus(QString in);
+
 };
 #endif // MAINWINDOW_H

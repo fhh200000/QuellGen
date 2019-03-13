@@ -15,7 +15,6 @@ public:
 typedef struct
 {
     int count;
-    int width;
     int index;
 }extrablock;
 #endif // QUELLBLOCK_H

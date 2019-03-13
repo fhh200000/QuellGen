@@ -17,6 +17,7 @@ public:
     void initAtlas(QPixmap& a, QPixmap& b, QPixmap& c,int xin,int yin);
     int x,y;
     void reloadAtlas(QPixmap& a);
+    void changeAtlas(QPixmap& a,QPixmap& b,QPixmap& c);
 private:
     Ui::QuBlock *ui;
 private slots:

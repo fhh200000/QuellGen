@@ -310,6 +310,10 @@ void ExportAction::saveinfo(char* docname,char* strname,char* filelocation)
         xmlSetProp(curlvl->children,reinterpret_cast<const unsigned char*>("array_size"),reinterpret_cast<unsigned char*>(stepcount));
         xmlSetProp(curlvl->children->next,reinterpret_cast<const unsigned char*>("array_chars"),reinterpret_cast<unsigned char*>(soludrop));
         xmlSetProp(curlvl->children->next,reinterpret_cast<const unsigned char*>("array_size"),reinterpret_cast<unsigned char*>(stepcount));
+        sprintf(stepcount,"%d",width);
+        xmlSetProp(curlvl,reinterpret_cast<const unsigned char*>("width"),reinterpret_cast<unsigned char*>(stepcount));
+        sprintf(stepcount,"%d",height);
+        xmlSetProp(curlvl,reinterpret_cast<const unsigned char*>("height"),reinterpret_cast<unsigned char*>(stepcount));
         delete(soludrop);
         delete(solution);
         curlvl = curlvl->next;

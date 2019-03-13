@@ -18,6 +18,7 @@ public:
     void initMap(int,int,int[],int[],int[]);
     void removeMap();
     void reloadBlock(extrablock in,int width);
+    void changeBlock(int a,int b,int c);
 private:
     Ui::ItWorksPop *ui;
     QuBlock** que=nullptr;

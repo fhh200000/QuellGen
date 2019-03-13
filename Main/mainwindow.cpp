@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButton_4,SIGNAL(clicked()),this,SLOT(showinfo()));
     connect(ui->actionImport,SIGNAL(triggered()),this,SLOT(import()));
     connect(ui->actionExport,SIGNAL(triggered()),this,SLOT(exportxml()));
+    connect(ui->submit,SIGNAL(clicked()),this,SLOT(changeData()));
     name = new char[32];
     MainWindow::self = this;
     //init data strings
@@ -204,7 +205,29 @@ MainWindow::MainWindow(QWidget *parent) :
                  "171-蜡烛，青" <<
                  "172-蜡烛，棕" <<
                  "173-蜡烛，灰" <<
-                 "174-书信";
+                 "174-书信" <<
+                 "175-墙砖覆盖区域"<<
+                 "176-墙砖,1x1,样式1"<<
+                 "177-墙砖,1x1,样式2"<<
+                 "178-墙砖,1x1,样式3"<<
+                 "179-墙砖,1x1,样式4"<<
+                 "180-"<<
+                 "181-"<<
+                 "182-"<<
+                 "183-"<<
+                 "184-墙砖,1x2,样式1"<<
+                 "185-墙砖,1x2,样式2"<<
+                 "186-墙砖,2x1,样式1"<<
+                 "187-墙砖,2x1,样式2"<<
+                 "188-墙砖,2x2,样式1"<<
+                 "189-墙砖,1x3,样式1"<<
+                 "190-墙砖,3x1,样式1"<<
+                 "191-墙砖,6x1,样式1"<<
+                 "192-墙砖,左下折角"<<
+                 "193-墙砖,左上折角"<<
+                 "194-墙砖,右上折角"<<
+                 "195-墙砖,右下折角"
+                 ;
         ui->l1->addItems(items);
         ui->l2->addItems(items);
         ui->l3->addItems(items);
@@ -289,8 +312,7 @@ void MainWindow::open_selected()
      FILE *fp;
      fp = fopen(fileName.toStdString().data(),"r+");
      fscanf(fp,"[QuellGen level data file]\n");
-     //ID不需要在解析地图时导入
-     fscanf(fp,"Level ID:%*[^\n]");
+     fscanf(fp,"Level ID:%[^\n]",id);
      fscanf(fp,"\n");
      fscanf(fp,"Level name:%[^\n]",name);
      fscanf(fp,"\n");
@@ -382,6 +404,7 @@ void MainWindow::save_selected()
     FILE *fp;
     fp = fopen(fileName.toStdString().data(),"w+");
     fprintf(fp,"[QuellGen level data file]\n");
+    fprintf(fp,"Level ID:%s\n",id);
     fprintf(fp,"Level name:%s\n",name);
     fprintf(fp,"Best solution:%d\n",steps);
     fprintf(fp,"Solution:");
@@ -404,7 +427,7 @@ void MainWindow::save_selected()
         fprintf(fp,"%d ",steplist->data()[i].drop);
     }
     fprintf(fp,"\n");
-     fprintf(fp,"Width:%d\n",w);
+    fprintf(fp,"Width:%d\n",w);
     fprintf(fp,"Height:%d\n",h);
     fprintf(fp,"Left space:%d\n",lspace);
     fprintf(fp,"Right space:%d\n",rspace);
@@ -446,6 +469,7 @@ void MainWindow::loadinfo(int x,int y)
 {
     QString data = QString("选中方块(%1,%2)").arg(x).arg(y);
     MainWindow::setStatus(data);
+    pos = x+y*static_cast<int>(w);
     ui->detailed->setEnabled(true);
     ui->l1->setCurrentIndex(layer0[x+y*static_cast<int>(w)]);
     ui->l2->setCurrentIndex(layer1[x+y*static_cast<int>(w)]);
@@ -549,4 +573,12 @@ void MainWindow::exportxml()
 void MainWindow::setStatus(QString in)
 {
     ui->statusBar->showMessage(in,-1);
+}
+void MainWindow::changeData()
+{
+    printf("%d:%d %d %d\n",pos,layer0[pos],layer1[pos],layer2[pos]);
+    layer0[pos]=ui->l1->currentIndex();
+    layer1[pos]=ui->l2->currentIndex();
+    layer2[pos]=ui->l3->currentIndex();
+    pop->changeBlock(layer0[pos],layer1[pos],layer2[pos]);
 }

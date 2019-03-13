@@ -43,3 +43,9 @@ void QuBlock::clicked()
 {
     MainWindow::self->loadinfo(x,y);
 }
+void QuBlock::changeAtlas(QPixmap& a,QPixmap& b,QPixmap& c)
+{
+    ui->first->setPixmap(a);
+    ui->second->setPixmap(b);
+    ui->third->setPixmap(c);
+}
