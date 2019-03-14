@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>AboutAuthor</class>
- <widget class="QWidget" name="AboutAuthor">
+ <widget class="QDialog" name="AboutAuthor">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,48 +11,71 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Dialog</string>
   </property>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>167</x>
+     <x>170</x>
      <y>130</y>
      <width>80</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>OK</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>20</y>
+     <x>20</x>
+     <y>40</y>
      <width>80</width>
      <height>80</height>
     </rect>
    </property>
    <property name="text">
-    <string>Image Here</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>author.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>10</y>
-     <width>311</width>
-     <height>111</height>
+     <x>120</x>
+     <y>30</y>
+     <width>281</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It Works!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Igniculus Alexander Fu&lt;br&gt;2000~? &lt;br&gt;Ningbo Senior High&lt;br&gt;HangZhou Institude of Electronics &amp;amp; Engineering&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AboutAuthor</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>207</x>
+     <y>85</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

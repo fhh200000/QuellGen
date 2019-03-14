@@ -18,28 +18,33 @@ SOURCES += main.cpp\
     qublock.cpp \
     quellblock.cpp \
     aboutgame.cpp \
-    aboutauthor.cpp \
     infoeditor.cpp \
     importaction.cpp \
-    exportaction.cpp
+    exportaction.cpp \
+    aboutauthor.cpp
 
 HEADERS  += mainwindow.h \
     itworkspop.h \
     qublock.h \
     quellblock.h \
     aboutgame.h \
-    aboutauthor.h \
     osspecificvars.h \
     infoeditor.h \
     importaction.h \
-    exportaction.h
+    exportaction.h \
+    aboutauthor.h
 unix {
         QMAKE_CXXFLAGS_WARN_ON += -Wno-unknown-pragmas
+        LIBS += -lxml2
     }
-LIBS += -lxml2
+win32 {
+        QMAKE_CXXFLAGS += /utf-8
+        LIBS += -llibxml2
+    }
+
 FORMS    += mainwindow.ui \
     itworkspop.ui \
     qublock.ui \
     aboutgame.ui \
-    aboutauthor.ui \
-    infoeditor.ui
+    infoeditor.ui \
+    aboutauthor.ui
